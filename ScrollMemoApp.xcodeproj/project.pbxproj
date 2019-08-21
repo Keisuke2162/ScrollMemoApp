@@ -15,6 +15,10 @@
 		E75631812305985400E2A065 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E756317F2305985400E2A065 /* LaunchScreen.storyboard */; };
 		E756318C2305985400E2A065 /* ScrollMemoAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E756318B2305985400E2A065 /* ScrollMemoAppTests.swift */; };
 		E75631972305985400E2A065 /* ScrollMemoAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75631962305985400E2A065 /* ScrollMemoAppUITests.swift */; };
+		E75631A72305995B00E2A065 /* DataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75631A42305995B00E2A065 /* DataView.swift */; };
+		E75631A82305995B00E2A065 /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75631A52305995B00E2A065 /* EditView.swift */; };
+		E75631A92305995B00E2A065 /* ScrollButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75631A62305995B00E2A065 /* ScrollButton.swift */; };
+		E75631AB2305A92800E2A065 /* IconEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75631AA2305A92800E2A065 /* IconEditView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +53,10 @@
 		E75631922305985400E2A065 /* ScrollMemoAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScrollMemoAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E75631962305985400E2A065 /* ScrollMemoAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollMemoAppUITests.swift; sourceTree = "<group>"; };
 		E75631982305985400E2A065 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E75631A42305995B00E2A065 /* DataView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataView.swift; sourceTree = "<group>"; };
+		E75631A52305995B00E2A065 /* EditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
+		E75631A62305995B00E2A065 /* ScrollButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollButton.swift; sourceTree = "<group>"; };
+		E75631AA2305A92800E2A065 /* IconEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconEditView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +109,10 @@
 			children = (
 				E75631732305985300E2A065 /* AppDelegate.swift */,
 				E75631752305985300E2A065 /* ViewController.swift */,
+				E75631A42305995B00E2A065 /* DataView.swift */,
+				E75631A62305995B00E2A065 /* ScrollButton.swift */,
+				E75631A52305995B00E2A065 /* EditView.swift */,
+				E75631AA2305A92800E2A065 /* IconEditView.swift */,
 				E75631772305985300E2A065 /* Main.storyboard */,
 				E756317D2305985400E2A065 /* Assets.xcassets */,
 				E756317F2305985400E2A065 /* LaunchScreen.storyboard */,
@@ -259,8 +271,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E75631AB2305A92800E2A065 /* IconEditView.swift in Sources */,
 				E75631762305985300E2A065 /* ViewController.swift in Sources */,
+				E75631A82305995B00E2A065 /* EditView.swift in Sources */,
+				E75631A92305995B00E2A065 /* ScrollButton.swift in Sources */,
 				E756317C2305985300E2A065 /* ScrollMemoApp.xcdatamodeld in Sources */,
+				E75631A72305995B00E2A065 /* DataView.swift in Sources */,
 				E75631742305985300E2A065 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
