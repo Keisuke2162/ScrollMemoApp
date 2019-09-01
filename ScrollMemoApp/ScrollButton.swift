@@ -32,6 +32,7 @@ class ScrollButton: UIViewController {
     //セーブデータ格納用
     var inputData: [SaveData] = []
     
+    
     //CoreDataからデータを取ってくる
     func getData() {
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -42,6 +43,8 @@ class ScrollButton: UIViewController {
         }catch {
             print("error")
         }
+        
+        print("\(inputData.count)件のデータを取得しました")
     }
     
     //アイコンのデフォルト行数
@@ -64,50 +67,45 @@ class ScrollButton: UIViewController {
         }catch {
             print("error")
         }
-        
-        /*************************************************/
-        
-        getData()
-        print("取得データ件数：\(inputData.count)")
-        
-        scrollView.frame = CGRect(x: 0.0, y: view.frame.width / 10 * 1, width: view.frame.width, height: view.frame.height)
-        scrollView.contentSize = CGSize(width:view.frame.width, height:view.frame.height)
-        scrollView.backgroundColor = .white
-        
-        view.addSubview(scrollView)
-        
-        SetButton(row: row)
-        
-        
         // Do any additional setup after loading the view.
     }
+    
+    let headder = UIView()
+    let headderTitle = UILabel()
     
     //画面が帰ってきたときに再ロードする
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        removeAllSubviews(parentView: scrollView)
+        
         getData()
         
-        scrollView.frame = CGRect(x: 0.0, y: view.frame.width / 10 * 1, width: view.frame.width, height: view.frame.height)
+        scrollView.frame = CGRect(x: 0.0, y: view.frame.width / 10 * 2.5, width: view.frame.width, height: view.frame.height)
         scrollView.contentSize = CGSize(width:view.frame.width, height:view.frame.height)
         scrollView.backgroundColor = .white
         
+        headder.frame = CGRect(x: 0.0, y:0.0 , width: view.frame.width, height: view.frame.width / 10 * 2.5)
+        headder.backgroundColor = .lightGray
+        
+        headderTitle.text = "TEST"
+        headderTitle.frame = CGRect(x: headder.frame.width / 2 - 25, y: headder.frame.height / 2 - 25, width: 50, height: 50)
+        
+        headder.addSubview(headderTitle)
+        view.addSubview(headder)
         view.addSubview(scrollView)
         
         SetButton(row: row)
     }
     
-    func addButton() {
-        let plusButton = UIButton()
-        plusButton.frame = CGRect(x: scrollView.contentSize.width - 70, y: scrollView.contentSize.height - 80, width: 80, height: 80)
-        plusButton.layer.cornerRadius = 40
-        //plusButton.backgroundColor = .black
-        plusButton.setImage(#imageLiteral(resourceName: "add"), for: .normal)
-        
-        plusButton.addTarget(self, action: #selector(AddRow), for: .touchUpInside)
-        
-        scrollView.addSubview(plusButton)
+    //view内のsubViewを全て削除する
+    func removeAllSubviews(parentView: MyScrollView){
+        let subviews = parentView.subviews
+        for subview in subviews {
+            subview.removeFromSuperview()
+        }
     }
+
     
     @objc func AddRow() {
         row += 1
@@ -120,34 +118,15 @@ class ScrollButton: UIViewController {
     var random: Int = 0
     
     func SetButton(row: Int) {
-        //var colorchoose: Int = 0
         var tag: Int = 0
         for i in 0 ..< row {
             for j in 0 ..< 4 {
                 let button = UIButton()
-                button.frame = CGRect(x: scrollView.frame.width / 4 * CGFloat(j), y: view.frame.height / 5 * CGFloat(i), width: scrollView.frame.width / 4, height: view.frame.height / 5)
+                button.frame = CGRect(x: scrollView.frame.width / 4 * CGFloat(j), y: view.frame.height / 6 * CGFloat(i), width: scrollView.frame.width / 4, height: view.frame.height / 6)
                 random = Int(arc4random_uniform(11))
-                
-                
-                //button.backgroundColor = colorName[random]
-                
-                
-               // colorchoose += 1
-                
+
                 button.tag = tag
-                
-                //let imageNum = arc4random_uniform(22)
-                //let imageStr: String = iconString[Int(imageNum)]
-                
-                //button.setImage(UIImage(named: imageStr), for: .normal)
-                
-                
-                //button.setTitle(String(tag), for: .normal)
-                
-                //ボタンにセットした画像とタイトルの位置修正
-                //button.imageEdgeInsets = UIEdgeInsets(top: -20.0, left: 40.0, bottom: 0, right: 10)
-                //button.titleEdgeInsets = UIEdgeInsets(top: 30.0, left: -20.0, bottom: 0, right: 10)
-                
+
                 button.layer.borderColor = UIColor.black.cgColor
                 //button.layer.borderWidth = 0.25
                 
@@ -155,29 +134,27 @@ class ScrollButton: UIViewController {
                 
                 for searchNum in 0 ..< inputData.count {
                     if tag == inputData[searchNum].tag {
-                        //button.setTitle(String(tag), for: .normal)
                         button.backgroundColor = colorName[tag % 11]
-                        button.setImage(UIImage(named: iconString[tag % 22]), for: .normal)
+                        button.setImage(UIImage(named: inputData[searchNum].iconName!), for: .normal)
                         
                         break
                     }
                 }
                 
-                if button.backgroundColor == nil {
-                    button.backgroundColor = .white
-                    button.setImage(#imageLiteral(resourceName: "icons8-united-nations-48"), for: .normal)
-                }
-                
-                
                 tag += 1
+                
+                if button.backgroundColor == nil {
+                    button.backgroundColor = .black
+                    button.setImage(#imageLiteral(resourceName: "around"), for: .normal)
+                }
                 
                 button.addTarget(self, action: #selector(tagPrint), for: .touchUpInside)
                 scrollView.addSubview(button)
             }
         }
         
-        scrollView.contentSize = CGSize(width:view.frame.width, height:view.frame.height / 5 * CGFloat(row))
-        addButton()
+        scrollView.contentSize = CGSize(width:view.frame.width, height:view.frame.height / 6 * CGFloat(row))
+        //addButton()
     }
     
 
@@ -200,11 +177,7 @@ class ScrollButton: UIViewController {
             }
         }
         
-        print(sender.tag)
-        print(sendTitle)
-        print(sendText)
-        
-        let nextView = EditView(tag: sender.tag, colorB: color, title: sendTitle,text: sendText)
+        let nextView = EditView(sendTag: sender.tag, sendColor: color, sendTitle: sendTitle, sendText: sendText)
         
         self.present(nextView, animated: true, completion: nil)
     }

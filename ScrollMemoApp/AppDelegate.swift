@@ -22,6 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         window?.rootViewController = ScrollButton()
         
+        //window?.rootViewController = GeneralView()
+        
         return true
     }
 

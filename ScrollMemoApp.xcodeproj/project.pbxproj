@@ -19,6 +19,8 @@
 		E75631A82305995B00E2A065 /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75631A52305995B00E2A065 /* EditView.swift */; };
 		E75631A92305995B00E2A065 /* ScrollButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75631A62305995B00E2A065 /* ScrollButton.swift */; };
 		E75631AB2305A92800E2A065 /* IconEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75631AA2305A92800E2A065 /* IconEditView.swift */; };
+		E79D1866230EFBCC009BFE61 /* ICONList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79D1865230EFBCC009BFE61 /* ICONList.swift */; };
+		E7F11184231C1B7D002A17D1 /* GeneralView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F11183231C1B7D002A17D1 /* GeneralView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +59,8 @@
 		E75631A52305995B00E2A065 /* EditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
 		E75631A62305995B00E2A065 /* ScrollButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollButton.swift; sourceTree = "<group>"; };
 		E75631AA2305A92800E2A065 /* IconEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconEditView.swift; sourceTree = "<group>"; };
+		E79D1865230EFBCC009BFE61 /* ICONList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICONList.swift; sourceTree = "<group>"; };
+		E7F11183231C1B7D002A17D1 /* GeneralView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +116,8 @@
 				E75631A42305995B00E2A065 /* DataView.swift */,
 				E75631A62305995B00E2A065 /* ScrollButton.swift */,
 				E75631A52305995B00E2A065 /* EditView.swift */,
+				E7F11183231C1B7D002A17D1 /* GeneralView.swift */,
+				E79D1865230EFBCC009BFE61 /* ICONList.swift */,
 				E75631AA2305A92800E2A065 /* IconEditView.swift */,
 				E75631772305985300E2A065 /* Main.storyboard */,
 				E756317D2305985400E2A065 /* Assets.xcassets */,
@@ -277,6 +283,8 @@
 				E75631A92305995B00E2A065 /* ScrollButton.swift in Sources */,
 				E756317C2305985300E2A065 /* ScrollMemoApp.xcdatamodeld in Sources */,
 				E75631A72305995B00E2A065 /* DataView.swift in Sources */,
+				E7F11184231C1B7D002A17D1 /* GeneralView.swift in Sources */,
+				E79D1866230EFBCC009BFE61 /* ICONList.swift in Sources */,
 				E75631742305985300E2A065 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
