@@ -29,7 +29,7 @@ class GeneralView: UIViewController {
             let y = CGFloat(i / 3 + 3)
             
             generalButton.tag = i
-            generalButton.frame = CGRect(x: width * x, y: height * y, width: width * 1.5, height: width * 1.5)
+            generalButton.frame = CGRect(x: width * x, y: height * y, width: width * 2, height: width * 2)
             generalButton.setImage(UIImage(named: iconName[i]), for: .normal)
             generalButton.addTarget(self, action: #selector(ChooseButton), for: .touchUpInside)
             
@@ -40,9 +40,11 @@ class GeneralView: UIViewController {
     var chooseButton = UIButton()
     
     @objc func ChooseButton(_ sender: UIButton) {
+        chooseButton.layer.borderColor = UIColor.clear.cgColor
+        
         chooseButton = sender
         chooseButton.layer.borderColor = UIColor.blue.cgColor
-        chooseButton.layer.borderWidth = 0.25
+        chooseButton.layer.borderWidth = 1.0
         
     }
 }

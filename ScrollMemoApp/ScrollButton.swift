@@ -77,7 +77,7 @@ class ScrollButton: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        removeAllSubviews(parentView: scrollView)
+        //removeAllSubviews(parentView: scrollView)
         
         getData()
         
@@ -163,6 +163,7 @@ class ScrollButton: UIViewController {
         
         var sendText = ""
         var sendTitle = ""
+        var sendIconName = ""
         
         print(sender.tag)
         
@@ -173,11 +174,13 @@ class ScrollButton: UIViewController {
                 
                 sendText = inputData[searchNum].text!
                 sendTitle = inputData[searchNum].title!
+                sendIconName = inputData[searchNum].iconName!
                 break
             }
         }
         
-        let nextView = EditView(sendTag: sender.tag, sendColor: color, sendTitle: sendTitle, sendText: sendText)
+        let nextView = EditView(sendTag: sender.tag, sendColor: color, sendTitle: sendTitle, sendText: sendText, sendIconName: sendIconName,  receiveArray: inputData)
+        
         
         self.present(nextView, animated: true, completion: nil)
     }

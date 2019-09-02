@@ -48,10 +48,9 @@ class IconList: UIViewController {
     
     
     @objc func saveIcon(sender: UIButton) {
-        let image = UIImage(named: iconString[sender.tag])
+        //let image = UIImage(named: iconString[sender.tag])
         
         let returnView = self.presentingViewController as! EditView
-        returnView.buttonIcon = image!
         returnView.buttonIconName = iconString[sender.tag]
         
         self.dismiss(animated: true, completion: nil)

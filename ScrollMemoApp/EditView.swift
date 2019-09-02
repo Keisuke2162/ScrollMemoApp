@@ -27,7 +27,7 @@ class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
     var receiveText = ""
     
     
-    var buttonIcon: UIImage = #imageLiteral(resourceName: "add")
+    //var buttonIcon: UIImage = #imageLiteral(resourceName: "add")
     var buttonIconName: String = ""
     
     //メモ記入用
@@ -41,14 +41,15 @@ class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
 
     
     //もらってきたデータを格納
-    init(sendTag: Int, sendColor: UIColor, sendTitle: String, sendText: String) {
+    init(sendTag: Int, sendColor: UIColor, sendTitle: String, sendText: String, sendIconName: String, receiveArray: [SaveData]) {
         
         self.receiveTag = sendTag
         self.receiveColor = sendColor
         self.receiveTitle = sendTitle
         self.receiveText = sendText
+        self.inputData = receiveArray
+        self.buttonIconName = sendIconName
 
-        
         super.init(nibName: nil, bundle: nil)
         
     }
@@ -90,7 +91,7 @@ class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
         iconEdit()
         
         //戻るボタン
-        returnButton()
+        //returnButton()
         
         print("受け取りデータ：\(receiveTitle), \(receiveText), \(receiveTag), \(receiveColor)")
     }
@@ -99,19 +100,20 @@ class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
      
-       iconEditButton.setImage(buttonIcon, for: .normal)
+       iconEditButton.setImage(UIImage(named: buttonIconName), for: .normal)
         
     }
-    
+    /*
     //ホーム画面に戻る
     func returnButton() {
         let returnIcon = UIButton()
+        
         returnIcon.frame = CGRect(x: view.frame.width - 150, y: view.frame.height - 50, width: 50, height: 50)
-        returnIcon.setImage(#imageLiteral(resourceName: "down"), for: .normal)
+        returnIcon.setImage(#imageLiteral(resourceName: "dropdown"), for: .normal)
         returnIcon.addTarget(self, action: #selector(returnSpring), for: .touchUpInside)
         
         view.addSubview(returnIcon)
-    }
+    }*/
     
     @objc func returnSpring() {
         dataSave()
@@ -123,10 +125,15 @@ class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
     
     func iconEdit() {
         
-        iconEditButton.frame = CGRect(x: view.frame.width - 75, y: view.frame.height - 50, width: 50, height: 50)
-        //iconEditButton.layer.cornerRadius = 25
-        //iconEditButton.backgroundColor = .black
-        iconEditButton.setImage(buttonIcon, for: .normal)
+        iconEditButton.frame = CGRect(x: view.frame.width - 75, y: view.frame.height - 75, width: 50, height: 50)
+        
+        print("アイコン名は\(buttonIconName)")
+        
+        iconEditButton.setImage(UIImage(named: buttonIconName), for: .normal)
+        
+        if buttonIconName == "" {
+            iconEditButton.setImage(#imageLiteral(resourceName: "noneicon"), for: .normal)
+        }
         
         iconEditButton.addTarget(self, action: #selector(ViewMove), for: .touchUpInside)
         
@@ -143,10 +150,12 @@ class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
         
     }
     
+    
+    
     //タイトル入力エリア
     func headder() {
-        let headder = UIView()
         
+        let headder = UIView()
         
         if receiveColor == .clear {
             headder.backgroundColor = .black
@@ -164,6 +173,15 @@ class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
         titleView.text = receiveTitle
         
         headder.addSubview(titleView)
+        
+        let returnIcon = UIButton()
+        
+        returnIcon.frame = CGRect(x: headder.frame.width - 50, y: headder.frame.height - 50, width: 50, height: 50)
+        returnIcon.setImage(#imageLiteral(resourceName: "doubledown"), for: .normal)
+        returnIcon.setTitleColor(.white, for: .normal)
+        returnIcon.addTarget(self, action: #selector(returnSpring), for: .touchUpInside)
+        
+        headder.addSubview(returnIcon)
     }
     
     //テキスト入力エリア
@@ -187,7 +205,7 @@ class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
         self.view.endEditing(true)
     }
     
-    
+    /*
     //データ保存⇨ホームに戻る
     func dataSave() {
         
@@ -204,48 +222,34 @@ class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
             print("保存対象データ：\(String(describing: data.text)), \(String(describing: data.title)), \(data.tag)")
             (UIApplication.shared.delegate as! AppDelegate).saveContext()
         }
-    }
+    }*/
  
-    /*
+    
+    
     //データ保存⇨ホームに戻る
-    //CoreDataからデータを取ってくる
     func dataSave() {
-        var checkFlag = false
         
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        do {
-            let fetchequest: NSFetchRequest<SaveData> = SaveData.fetchRequest()
-            inputData = try context.fetch(fetchequest)
-            
-        }catch {
-            print("error")
-        }
+        let data = SaveData(context: context)
+        
         
         for searchNum in 0 ..< inputData.count {
             if receiveTag == inputData[searchNum].tag {
-                inputData[searchNum].text = text.text
-                inputData[searchNum].title = titleView.text
-                inputData[searchNum].iconName = buttonIconName
-                
-                checkFlag = true
+                let deleteData = inputData[searchNum]
+                context.delete(deleteData)
+
                 break
             }
         }
         
-        if checkFlag == false {
-            editData.text = text.text
-            editData.title = titleView.text
-            editData.tag = Int64(receiveTag)
-            editData.iconName = buttonIconName
-            
-            
-            
-            inputData.append(editData)
-            
-        }
+        data.text = text.text
+        data.title = titleView.text
+        data.tag = Int64(receiveTag)
+        data.iconName = buttonIconName
+        
         (UIApplication.shared.delegate as! AppDelegate).saveContext()
     }
- */
+ 
  
 
     
