@@ -103,17 +103,6 @@ class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
        iconEditButton.setImage(UIImage(named: buttonIconName), for: .normal)
         
     }
-    /*
-    //ホーム画面に戻る
-    func returnButton() {
-        let returnIcon = UIButton()
-        
-        returnIcon.frame = CGRect(x: view.frame.width - 150, y: view.frame.height - 50, width: 50, height: 50)
-        returnIcon.setImage(#imageLiteral(resourceName: "dropdown"), for: .normal)
-        returnIcon.addTarget(self, action: #selector(returnSpring), for: .touchUpInside)
-        
-        view.addSubview(returnIcon)
-    }*/
     
     @objc func returnSpring() {
         dataSave()
@@ -169,7 +158,7 @@ class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
         
         titleView.frame = CGRect(x: 0, y: headder.frame.height / 2, width: headder.frame.width, height: headder.frame.height / 2)
         titleView.textColor = .white
-        titleView.font = UIFont(name: "Avenir-Oblique", size: 60)
+        titleView.font = UIFont(name: "Avenir-Oblique", size: 40)
         titleView.text = receiveTitle
         
         headder.addSubview(titleView)
@@ -190,7 +179,7 @@ class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
         text.frame = CGRect(x: 0, y: view.frame.height / 3.5, width: view.frame.width, height: view.frame.height / 3.5 * 2.5)
         text.returnKeyType = .done
         //text.font = UIFont.systemFont(ofSize: 40)
-        text.font = UIFont(name: "Avenir-Oblique", size: 30)
+        text.font = UIFont(name: "Avenir-Oblique", size: 20)
         text.backgroundColor = .clear
         // textViewのキーボードにツールバーを設定
         text.inputAccessoryView = keyboardBar

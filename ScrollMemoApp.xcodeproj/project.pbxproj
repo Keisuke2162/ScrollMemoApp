@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		E75631742305985300E2A065 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75631732305985300E2A065 /* AppDelegate.swift */; };
-		E75631762305985300E2A065 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75631752305985300E2A065 /* ViewController.swift */; };
 		E75631792305985300E2A065 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E75631772305985300E2A065 /* Main.storyboard */; };
 		E756317C2305985300E2A065 /* ScrollMemoApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E756317A2305985300E2A065 /* ScrollMemoApp.xcdatamodeld */; };
 		E756317E2305985400E2A065 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E756317D2305985400E2A065 /* Assets.xcassets */; };
@@ -21,6 +20,7 @@
 		E75631AB2305A92800E2A065 /* IconEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75631AA2305A92800E2A065 /* IconEditView.swift */; };
 		E79D1866230EFBCC009BFE61 /* ICONList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79D1865230EFBCC009BFE61 /* ICONList.swift */; };
 		E7F11184231C1B7D002A17D1 /* GeneralView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F11183231C1B7D002A17D1 /* GeneralView.swift */; };
+		E7F111A823296D95002A17D1 /* ColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F111A723296D95002A17D1 /* ColorPicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,7 +43,6 @@
 /* Begin PBXFileReference section */
 		E75631702305985300E2A065 /* ScrollMemoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScrollMemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E75631732305985300E2A065 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E75631752305985300E2A065 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		E75631782305985300E2A065 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E756317B2305985300E2A065 /* ScrollMemoApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ScrollMemoApp.xcdatamodel; sourceTree = "<group>"; };
 		E756317D2305985400E2A065 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -61,6 +60,7 @@
 		E75631AA2305A92800E2A065 /* IconEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconEditView.swift; sourceTree = "<group>"; };
 		E79D1865230EFBCC009BFE61 /* ICONList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICONList.swift; sourceTree = "<group>"; };
 		E7F11183231C1B7D002A17D1 /* GeneralView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralView.swift; sourceTree = "<group>"; };
+		E7F111A723296D95002A17D1 /* ColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,13 +112,11 @@
 			isa = PBXGroup;
 			children = (
 				E75631732305985300E2A065 /* AppDelegate.swift */,
-				E75631752305985300E2A065 /* ViewController.swift */,
 				E75631A42305995B00E2A065 /* DataView.swift */,
-				E75631A62305995B00E2A065 /* ScrollButton.swift */,
-				E75631A52305995B00E2A065 /* EditView.swift */,
-				E7F11183231C1B7D002A17D1 /* GeneralView.swift */,
-				E79D1865230EFBCC009BFE61 /* ICONList.swift */,
-				E75631AA2305A92800E2A065 /* IconEditView.swift */,
+				E7841713232EA182004F2F11 /* ホーム画面 */,
+				E7841715232EA1FA004F2F11 /* メモ帳画面 */,
+				E7841714232EA199004F2F11 /* ジャンル選択画面 */,
+				E7841716232EA210004F2F11 /* アイコン編集画面 */,
 				E75631772305985300E2A065 /* Main.storyboard */,
 				E756317D2305985400E2A065 /* Assets.xcassets */,
 				E756317F2305985400E2A065 /* LaunchScreen.storyboard */,
@@ -144,6 +142,41 @@
 				E75631982305985400E2A065 /* Info.plist */,
 			);
 			path = ScrollMemoAppUITests;
+			sourceTree = "<group>";
+		};
+		E7841713232EA182004F2F11 /* ホーム画面 */ = {
+			isa = PBXGroup;
+			children = (
+				E75631A62305995B00E2A065 /* ScrollButton.swift */,
+			);
+			path = "ホーム画面";
+			sourceTree = "<group>";
+		};
+		E7841714232EA199004F2F11 /* ジャンル選択画面 */ = {
+			isa = PBXGroup;
+			children = (
+				E7F11183231C1B7D002A17D1 /* GeneralView.swift */,
+				E7F111A723296D95002A17D1 /* ColorPicker.swift */,
+			);
+			name = "ジャンル選択画面";
+			path = "ジャンル選択画面";
+			sourceTree = "<group>";
+		};
+		E7841715232EA1FA004F2F11 /* メモ帳画面 */ = {
+			isa = PBXGroup;
+			children = (
+				E75631A52305995B00E2A065 /* EditView.swift */,
+			);
+			name = "メモ帳画面";
+			sourceTree = "<group>";
+		};
+		E7841716232EA210004F2F11 /* アイコン編集画面 */ = {
+			isa = PBXGroup;
+			children = (
+				E79D1865230EFBCC009BFE61 /* ICONList.swift */,
+				E75631AA2305A92800E2A065 /* IconEditView.swift */,
+			);
+			path = "アイコン編集画面";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -278,12 +311,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				E75631AB2305A92800E2A065 /* IconEditView.swift in Sources */,
-				E75631762305985300E2A065 /* ViewController.swift in Sources */,
 				E75631A82305995B00E2A065 /* EditView.swift in Sources */,
 				E75631A92305995B00E2A065 /* ScrollButton.swift in Sources */,
 				E756317C2305985300E2A065 /* ScrollMemoApp.xcdatamodeld in Sources */,
 				E75631A72305995B00E2A065 /* DataView.swift in Sources */,
 				E7F11184231C1B7D002A17D1 /* GeneralView.swift in Sources */,
+				E7F111A823296D95002A17D1 /* ColorPicker.swift in Sources */,
 				E79D1866230EFBCC009BFE61 /* ICONList.swift in Sources */,
 				E75631742305985300E2A065 /* AppDelegate.swift in Sources */,
 			);
