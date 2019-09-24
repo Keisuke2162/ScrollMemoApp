@@ -55,20 +55,7 @@ class ScrollButton: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        /*
-        /*************CoreData削除(テスト用)***************/
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        let fetchRequest: NSFetchRequest<SaveData> = SaveData.fetchRequest()
-        do{
-            let task = try context.fetch(fetchRequest)
-            for i in 0..<task.count {
-                context.delete(task[i])
-            }
-        }catch {
-            print("error")
-        }
-        
-        */
+
         // Do any additional setup after loading the view.
     }
     
@@ -79,13 +66,15 @@ class ScrollButton: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        view.backgroundColor = .black
+        
         removeAllSubviews(parentView: scrollView)
         
         getData()
         
         scrollView.frame = CGRect(x: 0.0, y: view.frame.width / 10 * 2.5, width: view.frame.width, height: view.frame.height)
         scrollView.contentSize = CGSize(width:view.frame.width, height:view.frame.height)
-        scrollView.backgroundColor = .white
+        scrollView.backgroundColor = .black
         
         headder.frame = CGRect(x: 0.0, y:0.0 , width: view.frame.width, height: view.frame.width / 10 * 2.5)
         headder.backgroundColor = .black
@@ -149,7 +138,15 @@ class ScrollButton: UIViewController {
         for i in 0 ..< row {
             for j in 0 ..< 4 {
                 let button = UIButton()
+                
                 button.frame = CGRect(x: scrollView.frame.width / 4 * CGFloat(j), y: view.frame.height / 5.5 * CGFloat(i), width: scrollView.frame.width / 4, height: view.frame.height / 5.5)
+                
+                button.frame.origin.x = scrollView.frame.width / 4 * CGFloat(j) + 5
+                button.frame.origin.y = view.frame.height / 5.5 * CGFloat(i) + 5
+                button.frame.size = CGSize(width: scrollView.frame.width / 4 - 10, height: view.frame.height / 5.5 - 10)
+                button.layer.cornerRadius = 10.0
+                
+                
                 random = Int(arc4random_uniform(11))
 
                 button.tag = tag
@@ -163,7 +160,22 @@ class ScrollButton: UIViewController {
                 
                 for searchNum in 0 ..< inputData.count {
                     if tag == inputData[searchNum].tag {
-                        button.backgroundColor = colorName[tag % 11]
+                        //button.backgroundColor = colorName[tag % 11]
+                        
+                        /*
+                        let fonView = UIView(frame: CGRect(x: button.frame.width / 7, y: button.frame.height / 10, width: button.frame.width / 7 * 6, height: button.frame.width / 7 * 6))
+                        fonView.backgroundColor = UIColor(colorCode: inputData[searchNum].iconColor!)
+                        fonView.layer.cornerRadius = button.frame.width / 7 * 6 / 2
+                        button.addSubview(fonView)
+                        
+                        let image = UIImageView()
+                        image.center = fonView.center
+                        image.sizeToFit()
+                        image.image = UIImage(named: inputData[searchNum].iconName!)
+                        fonView.addSubview(image)
+ 
+ */
+                        button.backgroundColor = UIColor(colorCode: inputData[searchNum].iconColor!)
                         button.setImage(UIImage(named: inputData[searchNum].iconName!), for: .normal)
                         
                         let label = UILabel(frame: CGRect(x: 0, y: button.frame.height / 4 * 2.5, width: button.frame.width, height:  button.frame.height / 4))
@@ -192,9 +204,10 @@ class ScrollButton: UIViewController {
         //addButton()
     }
     
-
+    var nextView = UIViewController()
     
     @objc func tagPrint(_ sender: UIButton) {
+        var sendViewFlg = false
         
         var sendText = ""
         var sendTitle = ""
@@ -210,13 +223,19 @@ class ScrollButton: UIViewController {
                 sendText = inputData[searchNum].text!
                 sendTitle = inputData[searchNum].title!
                 sendIconName = inputData[searchNum].iconName!
-                break
+                
+                sendViewFlg = true
             }
         }
         
-        let nextView = EditView(sendTag: sender.tag, sendColor: color, sendTitle: sendTitle, sendText: sendText, sendIconName: sendIconName,  receiveArray: inputData)
+        if sendViewFlg == true {
+            nextView = EditView(sendTag: sender.tag, sendColor: color, sendTitle: sendTitle, sendText: sendText, sendIconName: sendIconName,  receiveArray: inputData, viewKey: "Home")
+        } else {
+            nextView = GeneralView(receiveArray: inputData, receiveTag: sender.tag)
+        }
+
         
-        
+
         self.present(nextView, animated: true, completion: nil)
     }
     

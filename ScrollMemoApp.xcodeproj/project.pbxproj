@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E708ECA123380FBC000ED531 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ECA023380FBC000ED531 /* ListView.swift */; };
 		E75631742305985300E2A065 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75631732305985300E2A065 /* AppDelegate.swift */; };
 		E75631792305985300E2A065 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E75631772305985300E2A065 /* Main.storyboard */; };
 		E756317C2305985300E2A065 /* ScrollMemoApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E756317A2305985300E2A065 /* ScrollMemoApp.xcdatamodeld */; };
@@ -18,6 +19,7 @@
 		E75631A82305995B00E2A065 /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75631A52305995B00E2A065 /* EditView.swift */; };
 		E75631A92305995B00E2A065 /* ScrollButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75631A62305995B00E2A065 /* ScrollButton.swift */; };
 		E75631AB2305A92800E2A065 /* IconEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75631AA2305A92800E2A065 /* IconEditView.swift */; };
+		E7841718233140BB004F2F11 /* ColorCodeCast.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7841717233140BB004F2F11 /* ColorCodeCast.swift */; };
 		E79D1866230EFBCC009BFE61 /* ICONList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79D1865230EFBCC009BFE61 /* ICONList.swift */; };
 		E7F11184231C1B7D002A17D1 /* GeneralView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F11183231C1B7D002A17D1 /* GeneralView.swift */; };
 		E7F111A823296D95002A17D1 /* ColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F111A723296D95002A17D1 /* ColorPicker.swift */; };
@@ -41,6 +43,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E708ECA023380FBC000ED531 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		E75631702305985300E2A065 /* ScrollMemoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScrollMemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E75631732305985300E2A065 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E75631782305985300E2A065 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -58,6 +61,7 @@
 		E75631A52305995B00E2A065 /* EditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
 		E75631A62305995B00E2A065 /* ScrollButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollButton.swift; sourceTree = "<group>"; };
 		E75631AA2305A92800E2A065 /* IconEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconEditView.swift; sourceTree = "<group>"; };
+		E7841717233140BB004F2F11 /* ColorCodeCast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCodeCast.swift; sourceTree = "<group>"; };
 		E79D1865230EFBCC009BFE61 /* ICONList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICONList.swift; sourceTree = "<group>"; };
 		E7F11183231C1B7D002A17D1 /* GeneralView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralView.swift; sourceTree = "<group>"; };
 		E7F111A723296D95002A17D1 /* ColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPicker.swift; sourceTree = "<group>"; };
@@ -118,6 +122,7 @@
 				E7841714232EA199004F2F11 /* ジャンル選択画面 */,
 				E7841716232EA210004F2F11 /* アイコン編集画面 */,
 				E75631772305985300E2A065 /* Main.storyboard */,
+				E708ECA023380FBC000ED531 /* ListView.swift */,
 				E756317D2305985400E2A065 /* Assets.xcassets */,
 				E756317F2305985400E2A065 /* LaunchScreen.storyboard */,
 				E75631822305985400E2A065 /* Info.plist */,
@@ -156,6 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				E7F11183231C1B7D002A17D1 /* GeneralView.swift */,
+				E7841717233140BB004F2F11 /* ColorCodeCast.swift */,
 				E7F111A723296D95002A17D1 /* ColorPicker.swift */,
 			);
 			name = "ジャンル選択画面";
@@ -318,7 +324,9 @@
 				E7F11184231C1B7D002A17D1 /* GeneralView.swift in Sources */,
 				E7F111A823296D95002A17D1 /* ColorPicker.swift in Sources */,
 				E79D1866230EFBCC009BFE61 /* ICONList.swift in Sources */,
+				E708ECA123380FBC000ED531 /* ListView.swift in Sources */,
 				E75631742305985300E2A065 /* AppDelegate.swift in Sources */,
+				E7841718233140BB004F2F11 /* ColorCodeCast.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

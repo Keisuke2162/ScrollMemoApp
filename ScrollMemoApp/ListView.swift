@@ -1,17 +1,22 @@
 //
-//  File.swift
-//  scrollTest
+//  ListView.swift
+//  ScrollMemoApp
 //
-//  Created by 植田圭祐 on 2019/08/10.
+//  Created by 植田圭祐 on 2019/09/23.
 //  Copyright © 2019 Keisuke Ueda. All rights reserved.
 //
+
 
 import UIKit
 
 //ボタンの内容を表示する画面
 
-class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
+class ListView: UIViewController, UITabBarDelegate, UITextViewDelegate, UITableViewDataSource, UITableViewDelegate {
+
     
+    var testStr = ["testA","testB","testC","testD","testE","testF","testG"]
+    
+    var testTableView: UITableView!
     //セーブデータ格納用
     var inputData: [SaveData] = []
     //データ一時格納用
@@ -36,7 +41,7 @@ class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
     
     //キーボードにつけるツールバー（doneボタン用）
     let keyboardBar = UIToolbar()
-
+    
     
     //もらってきたデータを格納
     init(sendTag: Int, sendColor: UIColor, sendTitle: String, sendText: String, sendIconName: String, receiveArray: [SaveData], viewKey: String) {
@@ -48,10 +53,49 @@ class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
         self.inputData = receiveArray
         self.buttonIconName = sendIconName
         self.returnKey = viewKey
-
+        
         super.init(nibName: nil, bundle: nil)
         
     }
+    
+    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return testStr.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        //TableViewCellの識別子（todoCell）を使って再利用可能セルを生成
+        let cell = tableView.dequeueReusableCell(withIdentifier: "todoCell", for: indexPath)
+        //行番号に適したTodoのデータを取得
+        let data = testStr[indexPath.row]
+        //セルのラベルにTodoのタイトルをセット
+        cell.textLabel?.text = data
+        cell.textLabel?.tintColor = .black
+        cell.accessoryType = UITableViewCell.AccessoryType.none
+        
+        return cell
+    }
+    
+    //セルをタップした時に発動する処理
+    
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        print("selectCell")
+    }
+    
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    
+    
+    
+    
+    //myTableView1.estimatedRowHeight = 100
+    //myTableView1.rowHeight = UITableViewAutomaticDimension
     
     // 新しく init を定義した場合に必須
     required init?(coder aDecoder: NSCoder) {
@@ -60,7 +104,15 @@ class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        testTableView = UITableView(frame: CGRect(x: 0, y: view.frame.height / 4, width: view.frame.width, height: view.frame.height / 4 * 2.5))
+        testTableView.delegate = self
+        testTableView.dataSource = self
+        testTableView.estimatedRowHeight = 100
+        testTableView.rowHeight = UITableView.automaticDimension
+        
+        view.addSubview(testTableView)
+        
         //受け取ったボタンのタグ番号を代入
         //let receiveData = receiveTag
         //print(receiveData)
@@ -69,7 +121,7 @@ class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
         
         //画面上部にボタンと同じ色のヘッダー
         headder()
-
+        
         // キーボードcloseツールバー生成
         keyboardBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 40)
         keyboardBar.barStyle = .default
@@ -80,8 +132,8 @@ class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
         // スペース、閉じるボタンを右側に配置
         keyboardBar.items = [spacer, commitButton]
         
-        //textviewを表示
-        viewText()
+        //tableView表示
+        ListView()
         
         //ツールバーを表示
         //toolArea()
@@ -98,8 +150,8 @@ class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
     //画面が帰ってきたときに再ロードする
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-     
-       iconEditButton.setImage(UIImage(named: buttonIconName), for: .normal)
+        
+        iconEditButton.setImage(UIImage(named: buttonIconName), for: .normal)
         
     }
     
@@ -118,6 +170,12 @@ class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
         }
         
     }
+    
+    func ListView() {
+        
+    }
+    
+    
     
     let iconEditButton = UIButton()
     
@@ -183,21 +241,7 @@ class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
     }
     
     //テキスト入力エリア
-    func viewText() {
-        
-        text.frame = CGRect(x: 0, y: view.frame.height / 4, width: view.frame.width, height: view.frame.height / 4 * 2.5)
-        text.returnKeyType = .done
-        //text.font = UIFont.systemFont(ofSize: 40)
-        text.font = UIFont(name: "Avenir-Oblique", size: 20)
-        text.backgroundColor = .clear
-        // textViewのキーボードにツールバーを設定
-        text.inputAccessoryView = keyboardBar
-        //text.delegate = self
-        text.text = receiveText
-        
-        
-        view.addSubview(text)
-    }
+
     
     @objc func commitButtonTapped() {
         self.view.endEditing(true)
@@ -217,7 +261,7 @@ class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
             if receiveTag == inputData[searchNum].tag {
                 let deleteData = inputData[searchNum]
                 context.delete(deleteData)
-
+                
                 break
             }
         }
@@ -230,9 +274,9 @@ class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
         
         (UIApplication.shared.delegate as! AppDelegate).saveContext()
     }
- 
- 
-
+    
+    
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -240,7 +284,34 @@ class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
     
 }
 
+//独自のクラスをエンコード、デコードするのでNSObjectを継承かつNSCodingプロトコルへの準拠が必須
+class Todo: NSObject, NSSecureCoding {
+    static var supportsSecureCoding: Bool = true
+    
+    //todoのタイトル
+    var todoTitle: String?
+    //todoの状態フラグ
+    var todoDone: Bool = false
+    //コントラクタ
+    override init() {
+        
+    }
+    
+    //NSCodingsプロトコルに宣言されているデシリアライズ処理（デコード処理）
+    required init?(coder aDecoder: NSCoder) {
+        todoTitle = aDecoder.decodeObject(forKey: "todoTitle") as? String
+        todoDone = aDecoder.decodeBool(forKey: "todoDone")
+    }
+    
+    //NSCodingsプロトコルに宣言されているシリアライズ処理（エンコード処理）
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(todoTitle, forKey: "todoTitle")
+        aCoder.encode(todoDone, forKey: "todoDone")
+    }
+}
 
+
+/*
 //キーボード以外のところを押したらキーボードが閉じる設計(意味ない)
 extension UIViewController {
     func hideKeyboardWhenTappedAround() {
@@ -252,4 +323,6 @@ extension UIViewController {
     @objc func hideKeyboard() {
         view.endEditing(true)
     }
-}
+ */
+
+

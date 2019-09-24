@@ -10,6 +10,11 @@ import UIKit
 
 class GeneralView: UIViewController {
     
+    var inputData: [SaveData] = []
+    var sendTag = 0
+    
+    var returnViewTag = false
+    
     var scrollView = UIScrollView()
     var pageControl: UIPageControl!
     var headderColor: UIColor = .clear
@@ -23,6 +28,26 @@ class GeneralView: UIViewController {
     
     var titleStr: String = ""
     var setSub: String = ""
+    
+    init(receiveArray: [SaveData], receiveTag: Int){
+        self.inputData = receiveArray
+        self.sendTag = receiveTag
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if returnViewTag == true {
+            returnViewTag = false
+            dismiss(animated: false, completion: nil)
+        }
+    }
     
     
     override func viewDidLoad() {
@@ -120,6 +145,10 @@ class GeneralView: UIViewController {
         nextButton.addTarget(self, action: #selector(ChooseButton2), for: .touchUpInside)
         view2.addSubview(nextButton)
         
+        let label2 = UILabel(frame: CGRect(x: 100, y: 100, width: 200, height: 80))
+        label2.text = "その他設定エリア"
+        view2.addSubview(label2)
+        
         //ページ３
         let view3 = UIView(frame: CGRect(x: view.frame.width * 2, y: 0, width: view.frame.width, height: height * 5))
         view3.backgroundColor = .yellow
@@ -129,6 +158,10 @@ class GeneralView: UIViewController {
         resultButton.setImage(#imageLiteral(resourceName: "exit"), for: .normal)
         resultButton.addTarget(self, action: #selector(ResultView), for: .touchUpInside)
         view3.addSubview(resultButton)
+        
+        let label3 = UILabel(frame: CGRect(x: 100, y: 100, width: 200, height: 80))
+        label3.text = "通知設定？"
+        view3.addSubview(label3)
         
         // pageControlの表示位置とサイズ
         pageControl = UIPageControl(frame: CGRect(x: 0, y: height * 8.5, width: view.frame.width , height: 30))
@@ -148,8 +181,12 @@ class GeneralView: UIViewController {
         switch setSub {
         case "memo":
             print("Go to memo")
+            let nextView = EditView(sendTag: sendTag, sendColor: headderColor, sendTitle: titleTxt, sendText: "", sendIconName: "", receiveArray: inputData, viewKey: "General")
+            present(nextView, animated: true, completion: nil)
         case "list":
             print("Go to list")
+            //let nextView = ListView(sendTag: sendTag, sendColor: headderColor, sendTitle: titleTxt, sendText: "", sendIconName: "", receiveArray: inputData, viewKey: "General")
+            //present(nextView, animated: true, completion: nil)
         case "graph":
             print("Go to graph")
         case "map":
