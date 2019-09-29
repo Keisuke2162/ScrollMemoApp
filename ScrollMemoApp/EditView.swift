@@ -18,12 +18,14 @@ class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
     var editData = SaveData()
     
     //ホーム画面から受け取るデータ
+    /*
     var receiveTag = 0
     var receiveColor: UIColor = .clear
     var receiveTitle = ""
     var receiveText = ""
     var returnKey = ""
-    
+    var subject = ""
+    */
     
     //var buttonIcon: UIImage = #imageLiteral(resourceName: "add")
     var buttonIconName: String = ""
@@ -37,9 +39,9 @@ class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
     //キーボードにつけるツールバー（doneボタン用）
     let keyboardBar = UIToolbar()
 
-    
+    /*
     //もらってきたデータを格納
-    init(sendTag: Int, sendColor: UIColor, sendTitle: String, sendText: String, sendIconName: String, receiveArray: [SaveData], viewKey: String) {
+    init(sendTag: Int, sendColor: UIColor, sendTitle: String, sendText: String, sendIconName: String, receiveArray: [SaveData], viewKey: String, sendSubject: String) {
         
         self.receiveTag = sendTag
         self.receiveColor = sendColor
@@ -48,10 +50,13 @@ class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
         self.inputData = receiveArray
         self.buttonIconName = sendIconName
         self.returnKey = viewKey
+        self.subject = sendSubject
 
         super.init(nibName: nil, bundle: nil)
         
     }
+ */
+    
     
     // 新しく init を定義した場合に必須
     required init?(coder aDecoder: NSCoder) {
@@ -60,7 +65,7 @@ class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         //受け取ったボタンのタグ番号を代入
         //let receiveData = receiveTag
         //print(receiveData)
@@ -227,6 +232,7 @@ class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
         data.tag = Int64(receiveTag)
         data.iconName = buttonIconName
         data.iconColor = saveColor
+        data.subject = subject
         
         (UIApplication.shared.delegate as! AppDelegate).saveContext()
     }

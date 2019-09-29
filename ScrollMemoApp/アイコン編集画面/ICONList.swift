@@ -51,11 +51,15 @@ class IconList: UIViewController {
             
         }
     }
-    
+    /*
+     let count = (self.navigationController?.viewControllers.count)! - 2
+     let vcA = self.navigationController?.viewControllers[count]
+     */
     
     @objc func saveIcon(sender: UIButton) {
         //let image = UIImage(named: iconString[sender.tag])
-        
+        //let count = (self.navigationController?.viewControllers.count)! - 1
+        //let returnView = self.navigationController?.viewControllers[count]
         let returnView = self.presentingViewController as! EditView
         returnView.buttonIconName = iconString[sender.tag]
         

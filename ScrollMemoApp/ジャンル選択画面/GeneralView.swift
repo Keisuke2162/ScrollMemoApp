@@ -124,7 +124,6 @@ class GeneralView: UIViewController {
         for i in 0 ..< 9 {
             let generalButton = UIButton()
             let x = CGFloat(i % 3 * 3 + 1)
-            //let y = CGFloat(i / 3 + 4)
             let y = CGFloat(i / 3)
             
             generalButton.tag = i
@@ -145,9 +144,6 @@ class GeneralView: UIViewController {
         nextButton.addTarget(self, action: #selector(ChooseButton2), for: .touchUpInside)
         view2.addSubview(nextButton)
         
-        let label2 = UILabel(frame: CGRect(x: 100, y: 100, width: 200, height: 80))
-        label2.text = "その他設定エリア"
-        view2.addSubview(label2)
         
         //ページ３
         let view3 = UIView(frame: CGRect(x: view.frame.width * 2, y: 0, width: view.frame.width, height: height * 5))
@@ -158,10 +154,7 @@ class GeneralView: UIViewController {
         resultButton.setImage(#imageLiteral(resourceName: "exit"), for: .normal)
         resultButton.addTarget(self, action: #selector(ResultView), for: .touchUpInside)
         view3.addSubview(resultButton)
-        
-        let label3 = UILabel(frame: CGRect(x: 100, y: 100, width: 200, height: 80))
-        label3.text = "通知設定？"
-        view3.addSubview(label3)
+
         
         // pageControlの表示位置とサイズ
         pageControl = UIPageControl(frame: CGRect(x: 0, y: height * 8.5, width: view.frame.width , height: 30))
@@ -172,6 +165,8 @@ class GeneralView: UIViewController {
 
     }
     
+    var sendData: Data?
+    
     //ページ３の確定ボタンを押したら選択した情報を表示
     @objc func ResultView() {
         let titleTxt = String(titleField.text!)
@@ -181,12 +176,12 @@ class GeneralView: UIViewController {
         switch setSub {
         case "memo":
             print("Go to memo")
-            let nextView = EditView(sendTag: sendTag, sendColor: headderColor, sendTitle: titleTxt, sendText: "", sendIconName: "", receiveArray: inputData, viewKey: "General")
+            let nextView = EditView(sendTag: sendTag, sendColor: headderColor, sendTitle: titleTxt, sendText: "", sendIconName: "", receiveArray: inputData, viewKey: "General", sendSubject: "Text")
             present(nextView, animated: true, completion: nil)
         case "list":
             print("Go to list")
-            //let nextView = ListView(sendTag: sendTag, sendColor: headderColor, sendTitle: titleTxt, sendText: "", sendIconName: "", receiveArray: inputData, viewKey: "General")
-            //present(nextView, animated: true, completion: nil)
+            let nextView = ListView(sendTag: sendTag, sendColor: headderColor, sendTitle: titleTxt, sendArr: sendData, sendIconName: "", receiveArray: inputData, viewKey: "General", sendSubject: "List")
+            present(nextView, animated: true, completion: nil)
         case "graph":
             print("Go to graph")
         case "map":

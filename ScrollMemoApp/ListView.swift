@@ -13,10 +13,9 @@ import UIKit
 
 class ListView: UIViewController, UITabBarDelegate, UITextViewDelegate, UITableViewDataSource, UITableViewDelegate {
 
-    
     var testStr = ["testA","testB","testC","testD","testE","testF","testG"]
     
-    var testTableView: UITableView!
+    var testTableView = UITableView()
     //セーブデータ格納用
     var inputData: [SaveData] = []
     //データ一時格納用
@@ -26,15 +25,13 @@ class ListView: UIViewController, UITabBarDelegate, UITextViewDelegate, UITableV
     var receiveTag = 0
     var receiveColor: UIColor = .clear
     var receiveTitle = ""
-    var receiveText = ""
+    //var receiveText = ""
     var returnKey = ""
+    var receiveArr: Data?
     
+    var strArr: [String] = []
     
-    //var buttonIcon: UIImage = #imageLiteral(resourceName: "add")
     var buttonIconName: String = ""
-    
-    //メモ記入用
-    let text = UITextView()
     
     //タイトル記入用
     let titleView = UITextField()
@@ -44,32 +41,36 @@ class ListView: UIViewController, UITabBarDelegate, UITextViewDelegate, UITableV
     
     
     //もらってきたデータを格納
-    init(sendTag: Int, sendColor: UIColor, sendTitle: String, sendText: String, sendIconName: String, receiveArray: [SaveData], viewKey: String) {
-        
+    init(sendTag: Int, sendColor: UIColor, sendTitle: String, sendArr: Data?, sendIconName: String, receiveArray: [SaveData], viewKey: String, sendSubject: String) {
         self.receiveTag = sendTag
         self.receiveColor = sendColor
         self.receiveTitle = sendTitle
-        self.receiveText = sendText
+        //self.receiveText = sendText
         self.inputData = receiveArray
         self.buttonIconName = sendIconName
         self.returnKey = viewKey
+        self.receiveArr = sendArr
         
         super.init(nibName: nil, bundle: nil)
-        
     }
     
+    // 新しく init を定義した場合に必須
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
-    
+    //tableView設定項目
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return testStr.count
+        return strArr.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //TableViewCellの識別子（todoCell）を使って再利用可能セルを生成
         let cell = tableView.dequeueReusableCell(withIdentifier: "todoCell", for: indexPath)
         //行番号に適したTodoのデータを取得
-        let data = testStr[indexPath.row]
+        let data = strArr[indexPath.row]
         //セルのラベルにTodoのタイトルをセット
+    
         cell.textLabel?.text = data
         cell.textLabel?.tintColor = .black
         cell.accessoryType = UITableViewCell.AccessoryType.none
@@ -77,51 +78,44 @@ class ListView: UIViewController, UITabBarDelegate, UITextViewDelegate, UITableV
         return cell
     }
     
-    //セルをタップした時に発動する処理
-    
-    
+    //セルをタップした時に発生する処理
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         print("selectCell")
     }
-    
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
-    
-    
-    
-    
-    //myTableView1.estimatedRowHeight = 100
-    //myTableView1.rowHeight = UITableViewAutomaticDimension
-    
-    // 新しく init を定義した場合に必須
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == UITableViewCell.EditingStyle.delete {
+            strArr.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.fade)
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         
+        //tableViewを表示
         testTableView = UITableView(frame: CGRect(x: 0, y: view.frame.height / 4, width: view.frame.width, height: view.frame.height / 4 * 2.5))
         testTableView.delegate = self
         testTableView.dataSource = self
         testTableView.estimatedRowHeight = 100
         testTableView.rowHeight = UITableView.automaticDimension
+        testTableView.register(UITableViewCell.self, forCellReuseIdentifier: "todoCell")
         
         view.addSubview(testTableView)
         
-        //受け取ったボタンのタグ番号を代入
-        //let receiveData = receiveTag
-        //print(receiveData)
-        
-        view.backgroundColor = .white
+        //Data?型の配列データをアンラップ
+        if let strData = receiveArr {
+            strArr = try! JSONDecoder().decode([String].self, from: strData)
+        }
         
         //画面上部にボタンと同じ色のヘッダー
         headder()
-        
+     
         // キーボードcloseツールバー生成
         keyboardBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 40)
         keyboardBar.barStyle = .default
@@ -131,20 +125,17 @@ class ListView: UIViewController, UITabBarDelegate, UITextViewDelegate, UITableV
         let commitButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.done, target: self, action: #selector(commitButtonTapped))
         // スペース、閉じるボタンを右側に配置
         keyboardBar.items = [spacer, commitButton]
-        
-        //tableView表示
-        ListView()
+
         
         //ツールバーを表示
         //toolArea()
         
         //アイコン設定画面へ繊維するボタン
-        iconEdit()
+        SetButton()
         
         //戻るボタン
         //returnButton()
         
-        print("受け取りデータ：\(receiveTitle), \(receiveText), \(receiveTag), \(receiveColor)")
     }
     
     //画面が帰ってきたときに再ロードする
@@ -158,9 +149,6 @@ class ListView: UIViewController, UITabBarDelegate, UITextViewDelegate, UITableV
     @objc func returnSpring() {
         dataSave()
         
-        //dismiss(animated: true, completion: nil)
-        
-        
         if returnKey == "Home" {
             dismiss(animated: true, completion: nil)
         } else if returnKey == "General" {
@@ -170,45 +158,60 @@ class ListView: UIViewController, UITabBarDelegate, UITextViewDelegate, UITableV
         }
         
     }
-    
-    func ListView() {
-        
-    }
-    
+
     
     
     let iconEditButton = UIButton()
     
-    func iconEdit() {
+    func SetButton() {
         
+        //アイコン選択画面への遷移ボタン
         iconEditButton.frame = CGRect(x: view.frame.width - 75, y: view.frame.height - 75, width: 50, height: 50)
-        
-        print("アイコン名は\(buttonIconName)")
-        
         iconEditButton.setImage(UIImage(named: buttonIconName), for: .normal)
-        
-        if buttonIconName == "" {
-            iconEditButton.setImage(#imageLiteral(resourceName: "noneicon"), for: .normal)
-        }
-        
         iconEditButton.addTarget(self, action: #selector(ViewMove), for: .touchUpInside)
-        
         view.addSubview(iconEditButton)
+        
+        let addButton = UIButton(frame: CGRect(x: view.center.x - 25, y: view.frame.height - 75, width: 50, height: 50))
+        addButton.setImage(#imageLiteral(resourceName: "new"), for: .normal)
+        addButton.addTarget(self, action: #selector(AddTask), for: .touchUpInside)
+        view.addSubview(addButton)
     }
     
-    //アイコン画像エディット画面へ遷移
+    //アイコン選択画面へ遷移
     @objc func ViewMove() {
-        //let sendTitle = titleView.text
-        //let nextView = IconEditView(receiveTitle: sendTitle!, receiveColor: receiveColor)
         let nextView = IconList()
-        
         present(nextView, animated: true, completion: nil)
+    }
+    
+    @objc func AddTask() {
+        //Todo追加ダイアログのUI作成
+        let alertController = UIAlertController(title: "AddTodo", message: "Please input", preferredStyle: UIAlertController.Style.alert)
+        //テキストエリアを追加
+        alertController.addTextField(configurationHandler: nil)
+        //ダイアログにのせるOKボタンを定義
+        let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) { (action: UIAlertAction) in
+            //OKボタンた押下時の処理（テキストが入力されている場合）
+            if let textFiled = alertController.textFields?.first {
+                //Todoの配列に入力値（テキスト）を挿入。
+                self.strArr.insert(textFiled.text!, at: 0)
+                //行が追加されたことをテーブルに通知する
+                self.testTableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: UITableView.RowAnimation.right)
+            }
+        }
+        //作ったOKボタンをダイアログに追加
+        alertController.addAction(okAction)
+        
+        //CANCELボタンを定義
+        let cancelButton = UIAlertAction(title: "CANCEL", style: UIAlertAction.Style.cancel, handler: nil)
+        //CANCELボタンをダイアログに追加
+        alertController.addAction(cancelButton)
+        
+        //ダイアログを表示する
+        present(alertController, animated: true, completion: nil)
         
     }
     
-    
-    
-    //タイトル入力エリア
+    //ヘッダー作成
     func headder() {
         
         let headder = UIView()
@@ -220,7 +223,6 @@ class ListView: UIViewController, UITabBarDelegate, UITextViewDelegate, UITableV
         }
         
         headder.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height / 4)
-        
         view.addSubview(headder)
         
         titleView.frame = CGRect(x: 0, y: headder.frame.height / 2, width: headder.frame.width, height: headder.frame.height / 2)
@@ -240,9 +242,6 @@ class ListView: UIViewController, UITabBarDelegate, UITextViewDelegate, UITableV
         headder.addSubview(returnIcon)
     }
     
-    //テキスト入力エリア
-
-    
     @objc func commitButtonTapped() {
         self.view.endEditing(true)
     }
@@ -250,6 +249,9 @@ class ListView: UIViewController, UITabBarDelegate, UITextViewDelegate, UITableV
     //データ保存⇨ホームに戻る
     func dataSave() {
         
+        let arrAsString = strArr.description
+        let saveArr = arrAsString.data(using: String.Encoding.utf16)
+    
         let headderColor = receiveColor
         let saveColor = headderColor.rgbString
         
@@ -266,11 +268,13 @@ class ListView: UIViewController, UITabBarDelegate, UITextViewDelegate, UITableV
             }
         }
         
-        data.text = text.text
+        data.text = ""
         data.title = titleView.text
         data.tag = Int64(receiveTag)
         data.iconName = buttonIconName
         data.iconColor = saveColor
+        data.strArr = saveArr
+        data.subject = "List"
         
         (UIApplication.shared.delegate as! AppDelegate).saveContext()
     }
@@ -284,7 +288,7 @@ class ListView: UIViewController, UITabBarDelegate, UITextViewDelegate, UITableV
     
 }
 
-//独自のクラスをエンコード、デコードするのでNSObjectを継承かつNSCodingプロトコルへの準拠が必須
+//独自のクラスをエンコード、デコードするのでNSObjectを継承
 class Todo: NSObject, NSSecureCoding {
     static var supportsSecureCoding: Bool = true
     
@@ -309,20 +313,3 @@ class Todo: NSObject, NSSecureCoding {
         aCoder.encode(todoDone, forKey: "todoDone")
     }
 }
-
-
-/*
-//キーボード以外のところを押したらキーボードが閉じる設計(意味ない)
-extension UIViewController {
-    func hideKeyboardWhenTappedAround() {
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.hideKeyboard))
-        tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
-    }
-    
-    @objc func hideKeyboard() {
-        view.endEditing(true)
-    }
- */
-
-

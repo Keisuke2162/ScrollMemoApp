@@ -31,6 +31,7 @@ class ScrollButton: UIViewController {
     
     //セーブデータ格納用
     var inputData: [SaveData] = []
+    var sendData = SaveData()
     
     
     //CoreDataからデータを取ってくる
@@ -146,42 +147,22 @@ class ScrollButton: UIViewController {
                 button.frame.size = CGSize(width: scrollView.frame.width / 4 - 10, height: view.frame.height / 5.5 - 10)
                 button.layer.cornerRadius = 10.0
                 
-                
                 random = Int(arc4random_uniform(11))
 
                 button.tag = tag
-
-                //button.layer.borderColor = UIColor.black.cgColor
-                //button.layer.borderWidth = 0.25
-                
                 
                 button.imageEdgeInsets = UIEdgeInsets(top: -30.0, left: 0, bottom: 0, right: 0)
-            
                 
                 for searchNum in 0 ..< inputData.count {
                     if tag == inputData[searchNum].tag {
-                        //button.backgroundColor = colorName[tag % 11]
-                        
-                        /*
-                        let fonView = UIView(frame: CGRect(x: button.frame.width / 7, y: button.frame.height / 10, width: button.frame.width / 7 * 6, height: button.frame.width / 7 * 6))
-                        fonView.backgroundColor = UIColor(colorCode: inputData[searchNum].iconColor!)
-                        fonView.layer.cornerRadius = button.frame.width / 7 * 6 / 2
-                        button.addSubview(fonView)
-                        
-                        let image = UIImageView()
-                        image.center = fonView.center
-                        image.sizeToFit()
-                        image.image = UIImage(named: inputData[searchNum].iconName!)
-                        fonView.addSubview(image)
- 
- */
+
                         button.backgroundColor = UIColor(colorCode: inputData[searchNum].iconColor!)
                         button.setImage(UIImage(named: inputData[searchNum].iconName!), for: .normal)
                         
                         let label = UILabel(frame: CGRect(x: 0, y: button.frame.height / 4 * 2.5, width: button.frame.width, height:  button.frame.height / 4))
                         label.text = inputData[searchNum].title
                         label.textAlignment = NSTextAlignment.center
-                        label.font = UIFont(name: "Avenir-Oblique", size: 20)
+                        label.font = UIFont(name: "Avenir-Oblique", size: 10)
                         button.addSubview(label)
                         
                         break
@@ -212,10 +193,13 @@ class ScrollButton: UIViewController {
         var sendText = ""
         var sendTitle = ""
         var sendIconName = ""
+        var sendData: Data?
+        var subject = ""
         
         print(sender.tag)
         
         color = (sender.backgroundColor)!
+        
         
         for searchNum in 0 ..< inputData.count {
             if sender.tag == inputData[searchNum].tag {
@@ -223,13 +207,26 @@ class ScrollButton: UIViewController {
                 sendText = inputData[searchNum].text!
                 sendTitle = inputData[searchNum].title!
                 sendIconName = inputData[searchNum].iconName!
+                sendData = inputData[searchNum].strArr
+                subject = inputData[searchNum].subject!
                 
                 sendViewFlg = true
+                
+                break
             }
         }
         
         if sendViewFlg == true {
-            nextView = EditView(sendTag: sender.tag, sendColor: color, sendTitle: sendTitle, sendText: sendText, sendIconName: sendIconName,  receiveArray: inputData, viewKey: "Home")
+            switch subject {
+            case "Text":
+                nextView = EditView(sendTag: sender.tag, sendColor: color, sendTitle: sendTitle, sendText: sendText, sendIconName: sendIconName,  receiveArray: inputData, viewKey: "Home", sendSubject: subject)
+            case "List":
+                nextView = ListView(sendTag: sender.tag, sendColor: color, sendTitle: sendTitle, sendArr: sendData, sendIconName: sendIconName, receiveArray: inputData, viewKey: "Home", sendSubject: subject)
+                
+            default:
+                nextView = EditView(sendTag: sender.tag, sendColor: color, sendTitle: sendTitle, sendText: sendText, sendIconName: sendIconName,  receiveArray: inputData, viewKey: "Home", sendSubject: subject)
+            }
+            
         } else {
             nextView = GeneralView(receiveArray: inputData, receiveTag: sender.tag)
         }
