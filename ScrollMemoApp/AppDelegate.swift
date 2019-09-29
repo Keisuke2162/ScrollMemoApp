@@ -13,15 +13,33 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var navigationController: UINavigationController?
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        window = UIWindow()
-        window?.makeKeyAndVisible()
-        window?.rootViewController = ScrollButton()
-        //window?.rootViewController = GeneralView()
+        //window = UIWindow()
+        //window?.makeKeyAndVisible()
+        //window?.rootViewController = ScrollButton()
+        
+        let viewController: ScrollButton = ScrollButton()
+            
+        navigationController = UINavigationController(rootViewController: viewController)
+        // ナビゲーションバーの透明化
+        // 半透明の指定（デフォルト値）
+        navigationController?.navigationBar.isTranslucent = true
+        // 空の背景画像設定
+        navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        // ナビゲーションバーの影画像（境界線の画像）を空に設定
+        navigationController!.navigationBar.shadowImage = UIImage()
+        navigationController?.setNavigationBarHidden(true, animated: false)
+            
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        self.window?.rootViewController = navigationController
+        self.window?.makeKeyAndVisible()
+        
+        
         
         return true
     }

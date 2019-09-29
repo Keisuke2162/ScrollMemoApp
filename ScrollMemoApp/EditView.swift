@@ -18,14 +18,13 @@ class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
     var editData = SaveData()
     
     //ホーム画面から受け取るデータ
-    /*
-    var receiveTag = 0
-    var receiveColor: UIColor = .clear
-    var receiveTitle = ""
-    var receiveText = ""
+    var tag = 0
+    var color: UIColor = .clear
+    var textContent = ""
+    var titleContent = ""
     var returnKey = ""
     var subject = ""
-    */
+    
     
     //var buttonIcon: UIImage = #imageLiteral(resourceName: "add")
     var buttonIconName: String = ""
@@ -39,14 +38,14 @@ class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
     //キーボードにつけるツールバー（doneボタン用）
     let keyboardBar = UIToolbar()
 
-    /*
+    
     //もらってきたデータを格納
     init(sendTag: Int, sendColor: UIColor, sendTitle: String, sendText: String, sendIconName: String, receiveArray: [SaveData], viewKey: String, sendSubject: String) {
         
-        self.receiveTag = sendTag
-        self.receiveColor = sendColor
-        self.receiveTitle = sendTitle
-        self.receiveText = sendText
+        self.tag = sendTag
+        self.color = sendColor
+        self.textContent = sendText
+        self.titleContent = sendTitle
         self.inputData = receiveArray
         self.buttonIconName = sendIconName
         self.returnKey = viewKey
@@ -55,8 +54,6 @@ class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
         super.init(nibName: nil, bundle: nil)
         
     }
- */
-    
     
     // 新しく init を定義した場合に必須
     required init?(coder aDecoder: NSCoder) {
@@ -65,10 +62,6 @@ class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //受け取ったボタンのタグ番号を代入
-        //let receiveData = receiveTag
-        //print(receiveData)
         
         view.backgroundColor = .white
         
@@ -97,7 +90,6 @@ class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
         //戻るボタン
         //returnButton()
         
-        print("受け取りデータ：\(receiveTitle), \(receiveText), \(receiveTag), \(receiveColor)")
     }
     
     //画面が帰ってきたときに再ロードする
@@ -111,17 +103,13 @@ class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
     @objc func returnSpring() {
         dataSave()
         
-        //dismiss(animated: true, completion: nil)
-        
-        
-        if returnKey == "Home" {
-            dismiss(animated: true, completion: nil)
-        } else if returnKey == "General" {
-            let returnView = self.presentingViewController as! GeneralView
-            returnView.returnViewTag = true
-            dismiss(animated: true, completion: nil)
-        }
-        
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = CATransitionType.reveal
+        transition.subtype = CATransitionSubtype.fromBottom
+        navigationController?.view.layer.add(transition, forKey: nil)
+
+        navigationController?.popToViewController(navigationController!.viewControllers[0], animated: false)
     }
     
     let iconEditButton = UIButton()
@@ -129,8 +117,6 @@ class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
     func iconEdit() {
         
         iconEditButton.frame = CGRect(x: view.frame.width - 75, y: view.frame.height - 75, width: 50, height: 50)
-        
-        print("アイコン名は\(buttonIconName)")
         
         iconEditButton.setImage(UIImage(named: buttonIconName), for: .normal)
         
@@ -142,28 +128,23 @@ class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
         
         view.addSubview(iconEditButton)
     }
-    
+
     //アイコン画像エディット画面へ遷移
     @objc func ViewMove() {
-        //let sendTitle = titleView.text
-        //let nextView = IconEditView(receiveTitle: sendTitle!, receiveColor: receiveColor)
         let nextView = IconList()
-        
-        present(nextView, animated: true, completion: nil)
-        
+        nextView.viewKey = "Text"
+        self.navigationController?.pushViewController(nextView, animated: true)
     }
-    
-    
     
     //タイトル入力エリア
     func headder() {
         
         let headder = UIView()
         
-        if receiveColor == .clear {
-            headder.backgroundColor = .black
+        if color == .clear {
+            headder.backgroundColor = .clear
         } else {
-            headder.backgroundColor = receiveColor
+            headder.backgroundColor = color
         }
         
         headder.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height / 4)
@@ -173,7 +154,7 @@ class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
         titleView.frame = CGRect(x: 0, y: headder.frame.height / 2, width: headder.frame.width, height: headder.frame.height / 2)
         titleView.textColor = .white
         titleView.font = UIFont(name: "Avenir-Oblique", size: 40)
-        titleView.text = receiveTitle
+        titleView.text = titleContent
         
         headder.addSubview(titleView)
         
@@ -198,7 +179,7 @@ class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
         // textViewのキーボードにツールバーを設定
         text.inputAccessoryView = keyboardBar
         //text.delegate = self
-        text.text = receiveText
+        text.text = textContent
         
         
         view.addSubview(text)
@@ -211,7 +192,7 @@ class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
     //データ保存⇨ホームに戻る
     func dataSave() {
         
-        let headderColor = receiveColor
+        let headderColor = color
         let saveColor = headderColor.rgbString
         
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -219,7 +200,7 @@ class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
         
         
         for searchNum in 0 ..< inputData.count {
-            if receiveTag == inputData[searchNum].tag {
+            if tag == inputData[searchNum].tag {
                 let deleteData = inputData[searchNum]
                 context.delete(deleteData)
 
@@ -229,15 +210,15 @@ class EditView: UIViewController, UITabBarDelegate, UITextViewDelegate {
         
         data.text = text.text
         data.title = titleView.text
-        data.tag = Int64(receiveTag)
+        data.tag = Int64(tag)
         data.iconName = buttonIconName
         data.iconColor = saveColor
         data.subject = subject
         
         (UIApplication.shared.delegate as! AppDelegate).saveContext()
     }
- 
- 
+    
+
 
     
     override func didReceiveMemoryWarning() {

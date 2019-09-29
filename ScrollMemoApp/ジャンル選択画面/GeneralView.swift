@@ -27,7 +27,6 @@ class GeneralView: UIViewController {
     let keyboardBar = UIToolbar()
     
     var titleStr: String = ""
-    var setSub: String = ""
     
     init(receiveArray: [SaveData], receiveTag: Int){
         self.inputData = receiveArray
@@ -134,6 +133,7 @@ class GeneralView: UIViewController {
             view1.addSubview(generalButton)
         }
         
+        /*
         //ページ２
         let view2 = UIView(frame: CGRect(x: view.frame.width, y: 0, width: view.frame.width, height: height * 5))
         view2.backgroundColor = .blue
@@ -162,26 +162,24 @@ class GeneralView: UIViewController {
         pageControl.pageIndicatorTintColor = .lightGray
         pageControl.currentPageIndicatorTintColor = .black
         view.addSubview(pageControl)
+ */
 
     }
     
     var sendData: Data?
     
-    //ページ３の確定ボタンを押したら選択した情報を表示
-    @objc func ResultView() {
+    //
+    func MoveNextView(subject: String) {
         let titleTxt = String(titleField.text!)
-        
-        print("title: \(titleTxt) subject: \(setSub) color: \(headderColor)")
+        var nextView = UIViewController()
        
-        switch setSub {
+        switch subject {
         case "memo":
             print("Go to memo")
-            let nextView = EditView(sendTag: sendTag, sendColor: headderColor, sendTitle: titleTxt, sendText: "", sendIconName: "", receiveArray: inputData, viewKey: "General", sendSubject: "Text")
-            present(nextView, animated: true, completion: nil)
+            nextView = EditView(sendTag: sendTag, sendColor: headderColor, sendTitle: titleTxt, sendText: "", sendIconName: "", receiveArray: inputData, viewKey: "General", sendSubject: "Text")
         case "list":
             print("Go to list")
-            let nextView = ListView(sendTag: sendTag, sendColor: headderColor, sendTitle: titleTxt, sendArr: sendData, sendIconName: "", receiveArray: inputData, viewKey: "General", sendSubject: "List")
-            present(nextView, animated: true, completion: nil)
+            nextView = ListView(sendTag: sendTag, sendColor: headderColor, sendTitle: titleTxt, sendArr: sendData, sendIconName: "", receiveArray: inputData, viewKey: "General", sendSubject: "List")
         case "graph":
             print("Go to graph")
         case "map":
@@ -199,7 +197,7 @@ class GeneralView: UIViewController {
         default:
             print("Other")
         }
-    
+        self.navigationController?.pushViewController(nextView, animated: true)
     }
     
     
@@ -212,9 +210,10 @@ class GeneralView: UIViewController {
         chooseButton.layer.borderColor = UIColor.blue.cgColor
         chooseButton.layer.borderWidth = 1.0
         
-        setSub = subject[sender.tag]
+        let chooseSub = subject[sender.tag]
+        MoveNextView(subject: chooseSub)
         
-        ViewScroll()
+        //ViewScroll()
     }
     
     @objc func ChooseButton2(_ sender: UIButton) {
@@ -232,10 +231,10 @@ class GeneralView: UIViewController {
 //GeneralViewにページスクロールを設定する
 extension GeneralView: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        //print(scrollView.contentOffset.x)
-        //print("SIZE\(scrollView.frame.size.width)")
         
         
-        pageControl.currentPage = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
+        //pageControl.currentPage = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
     }
 }
+
+

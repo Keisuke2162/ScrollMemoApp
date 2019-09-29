@@ -31,7 +31,7 @@ class ScrollButton: UIViewController {
     
     //セーブデータ格納用
     var inputData: [SaveData] = []
-    var sendData = SaveData()
+    var saveData = SaveData()
     
     
     //CoreDataからデータを取ってくる
@@ -56,6 +56,8 @@ class ScrollButton: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationItem.title = "Top Page"
 
         // Do any additional setup after loading the view.
     }
@@ -77,6 +79,7 @@ class ScrollButton: UIViewController {
         scrollView.contentSize = CGSize(width:view.frame.width, height:view.frame.height)
         scrollView.backgroundColor = .black
         
+        /*
         headder.frame = CGRect(x: 0.0, y:0.0 , width: view.frame.width, height: view.frame.width / 10 * 2.5)
         headder.backgroundColor = .black
         
@@ -84,7 +87,7 @@ class ScrollButton: UIViewController {
         headderTitle.text = "TEST"
         headder.tintColor = .white
         headderTitle.frame = CGRect(x: headder.frame.width / 2 - 25, y: headder.frame.height / 2 - 25, width: 50, height: 50)
-        
+        */
         
         
         let deleteButton = UIButton()
@@ -123,16 +126,10 @@ class ScrollButton: UIViewController {
         }
     }
 
-    
     @objc func AddRow() {
         row += 1
         SetButton(row: row)
-        print("\(row)行目")
     }
-    
-    let colorName: [UIColor] = [.blue, .red, .yellow, .green, .orange, .gray, .white, .cyan, .magenta, .purple, .brown]
-    
-    var random: Int = 0
     
     func SetButton(row: Int) {
         var tag: Int = 0
@@ -146,9 +143,6 @@ class ScrollButton: UIViewController {
                 button.frame.origin.y = view.frame.height / 5.5 * CGFloat(i) + 5
                 button.frame.size = CGSize(width: scrollView.frame.width / 4 - 10, height: view.frame.height / 5.5 - 10)
                 button.layer.cornerRadius = 10.0
-                
-                random = Int(arc4random_uniform(11))
-
                 button.tag = tag
                 
                 button.imageEdgeInsets = UIEdgeInsets(top: -30.0, left: 0, bottom: 0, right: 0)
@@ -173,7 +167,10 @@ class ScrollButton: UIViewController {
                 
                 if button.backgroundColor == nil {
                     button.backgroundColor = .black
-                    button.setImage(#imageLiteral(resourceName: "icons8-united-nations-48"), for: .normal)
+                    button.setBackgroundImage(UIImage(named: "62085-OB2I1K-498"), for: .normal)
+                    button.layer.borderColor = UIColor.white.cgColor
+                    button.layer.masksToBounds = true
+                    button.layer.borderWidth = 5.0
                 }
                 
                 button.addTarget(self, action: #selector(tagPrint), for: .touchUpInside)
@@ -210,6 +207,8 @@ class ScrollButton: UIViewController {
                 sendData = inputData[searchNum].strArr
                 subject = inputData[searchNum].subject!
                 
+                saveData = inputData[searchNum]
+                
                 sendViewFlg = true
                 
                 break
@@ -230,10 +229,14 @@ class ScrollButton: UIViewController {
         } else {
             nextView = GeneralView(receiveArray: inputData, receiveTag: sender.tag)
         }
-
         
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = CATransitionType.moveIn
+        transition.subtype = CATransitionSubtype.fromBottom
+        navigationController?.view.layer.add(transition, forKey: nil)
 
-        self.present(nextView, animated: true, completion: nil)
+        self.navigationController?.pushViewController(nextView, animated: false)
     }
     
 

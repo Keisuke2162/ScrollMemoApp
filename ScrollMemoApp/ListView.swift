@@ -149,17 +149,14 @@ class ListView: UIViewController, UITabBarDelegate, UITextViewDelegate, UITableV
     @objc func returnSpring() {
         dataSave()
         
-        if returnKey == "Home" {
-            dismiss(animated: true, completion: nil)
-        } else if returnKey == "General" {
-            let returnView = self.presentingViewController as! GeneralView
-            returnView.returnViewTag = true
-            dismiss(animated: true, completion: nil)
-        }
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = CATransitionType.reveal
+        transition.subtype = CATransitionSubtype.fromBottom
+        navigationController?.view.layer.add(transition, forKey: nil)
         
+        navigationController?.popToViewController(navigationController!.viewControllers[0], animated: false)
     }
-
-    
     
     let iconEditButton = UIButton()
     

@@ -30,6 +30,8 @@ class IconList: UIViewController {
         
     }
     
+    var viewKey = ""
+    
     func IconSelect() {
         let iconLength = view.frame.width / 7
         let head = view.frame.height / 10
@@ -51,21 +53,32 @@ class IconList: UIViewController {
             
         }
     }
+    
     /*
-     let count = (self.navigationController?.viewControllers.count)! - 2
-     let vcA = self.navigationController?.viewControllers[count]
-     */
+     let nav = self.navigationController
+     // 一つ前のViewControllerを取得する
+     let createGroupViewController = nav?.viewControllers[(nav?.viewControllers.count)!-2] as! CreateGroupViewController
+     // 値を渡す
+     createGroupViewController.setSelectedImage()
+     
+     // popする
+     _ = navigationController?.popViewController(animated: true)
+    */
     
     @objc func saveIcon(sender: UIButton) {
-        //let image = UIImage(named: iconString[sender.tag])
-        //let count = (self.navigationController?.viewControllers.count)! - 1
-        //let returnView = self.navigationController?.viewControllers[count]
-        let returnView = self.presentingViewController as! EditView
-        returnView.buttonIconName = iconString[sender.tag]
+        let viewCnt = (self.navigationController!.viewControllers.count)-2
+        print(viewCnt)
         
-        self.dismiss(animated: true, completion: nil)
-    
+        switch viewKey {
+        case "Text":
+            let returnView = self.navigationController?.viewControllers[viewCnt] as! EditView
+            returnView.buttonIconName = iconString[sender.tag]
+
+        default:
+            print("error")
+        }
         
+        navigationController?.popToViewController(navigationController!.viewControllers[viewCnt], animated: false)
     }
     
     
