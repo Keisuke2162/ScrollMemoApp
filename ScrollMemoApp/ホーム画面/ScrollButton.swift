@@ -23,8 +23,7 @@ class MyScrollView: UIScrollView {
 }
 
 class ScrollButton: UIViewController {
-    
-    
+
     var iconString: [String] = ["adidas","android","bigben","captain","dragon","ferrari","flower","ios","king",
                                 "magic","mazda","monster48","nasa","pharao","pika","pirates","premier",
                                 "psyduck","real","mercedes","sagrada","samurai"]
@@ -58,16 +57,20 @@ class ScrollButton: UIViewController {
         super.viewDidLoad()
         
         self.navigationItem.title = "Top Page"
+        
 
         // Do any additional setup after loading the view.
     }
     
     let headder = UIView()
     let headderTitle = UILabel()
+    let deleteButton = UIButton()
     
     //画面が帰ってきたときに再ロードする
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        //view.isOpaque = true
         
         view.backgroundColor = .black
         
@@ -79,25 +82,14 @@ class ScrollButton: UIViewController {
         scrollView.contentSize = CGSize(width:view.frame.width, height:view.frame.height)
         scrollView.backgroundColor = .black
         
-        /*
-        headder.frame = CGRect(x: 0.0, y:0.0 , width: view.frame.width, height: view.frame.width / 10 * 2.5)
-        headder.backgroundColor = .black
-        
-        
-        headderTitle.text = "TEST"
-        headder.tintColor = .white
-        headderTitle.frame = CGRect(x: headder.frame.width / 2 - 25, y: headder.frame.height / 2 - 25, width: 50, height: 50)
-        */
-        
-        
-        let deleteButton = UIButton()
-        deleteButton.frame = CGRect(x: headder.frame.width - 75, y: headder.center.y - 25, width: 50, height: 50)
-        deleteButton.setImage(#imageLiteral(resourceName: "watch"), for: .normal)
+        deleteButton.frame = CGRect(x: view.frame.width - 50, y: 50, width: 50, height: 50)
+        //deleteButton.backgroundColor = .white
+        deleteButton.setTitle("🙅‍♂️", for: .normal)
         deleteButton.addTarget(self, action: #selector(DataDelete), for: .touchUpInside)
         
         //headder.addSubview(headderTitle)
-        headder.addSubview(deleteButton)
-        view.addSubview(headder)
+        view.addSubview(deleteButton)
+        //view.addSubview(headder)
         view.addSubview(scrollView)
         
         SetButton(row: row)
@@ -149,15 +141,20 @@ class ScrollButton: UIViewController {
                 
                 for searchNum in 0 ..< inputData.count {
                     if tag == inputData[searchNum].tag {
+                        
+                        if let colorCode = inputData[searchNum].iconColor {
+                            button.backgroundColor = UIColor(colorCode: colorCode)
+                        }
 
-                        button.backgroundColor = UIColor(colorCode: inputData[searchNum].iconColor!)
+                        
                         button.setImage(UIImage(named: inputData[searchNum].iconName!), for: .normal)
                         
                         let label = UILabel(frame: CGRect(x: 0, y: button.frame.height / 4 * 2.5, width: button.frame.width, height:  button.frame.height / 4))
                         label.text = inputData[searchNum].title
                         label.textAlignment = NSTextAlignment.center
-                        label.font = UIFont(name: "Avenir-Oblique", size: 10)
+                        label.font = UIFont(name: "Avenir-Oblique", size: 20)
                         button.addSubview(label)
+                        
                         
                         break
                     }
@@ -172,14 +169,77 @@ class ScrollButton: UIViewController {
                     button.layer.masksToBounds = true
                     button.layer.borderWidth = 5.0
                 }
-                
+                /*
+                let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.onLongPressed(_:)))
+                button.tag = 123
+                button.addGestureRecognizer(longPress)
+ */
+                let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.onLongPress(_:)))
+                button.addGestureRecognizer(longPress)
                 button.addTarget(self, action: #selector(tagPrint), for: .touchUpInside)
+                //button.addTarget(self, action: #selector(ButtonAnimation), for: .touchUpInside)
                 scrollView.addSubview(button)
             }
         }
         
         scrollView.contentSize = CGSize(width:view.frame.width, height:view.frame.height / 6 * CGFloat(row))
         //addButton()
+    }
+    
+    @objc func onLongPress(_ gesture: UILongPressGestureRecognizer) {
+        guard let sender = gesture.view as? UIButton else {
+            print("Sender is not a button")
+            return
+        }
+        
+        switch (gesture.state) {
+        case .began:
+            print("longPress start")
+            sender.layer.borderWidth = 5.0
+            sender.layer.borderColor = UIColor.black.cgColor
+            
+            
+            let sendButton = sender
+            nextView = SendView(sendButton: sendButton)
+            nextView.modalPresentationStyle = .overCurrentContext
+
+            present(nextView, animated: true, completion: nil)
+ 
+            
+            /*
+            let transition = CATransition()
+            transition.duration = 0.3
+            transition.type = CATransitionType.moveIn
+            transition.subtype = CATransitionSubtype.fromBottom
+            */
+            //navigationController?.view.layer.add(transition, forKey: nil)
+        
+        case .ended:
+            print("longPress end")
+            sender.layer.borderWidth = 0.0
+            sender.layer.borderColor = UIColor.black.cgColor
+            ButtonAnimation(sender: sender)
+        default:
+            break
+        }
+        
+        // 長押しされたボタンは sender.tag で判別
+    }
+
+    
+    //ボタン（カード）を裏返す処理
+    func ButtonAnimation(sender: UIButton) {
+        let width = sender.frame.width / 2
+        let x = sender.frame.origin.x + width
+        
+        UIView.animate(withDuration: 0.25, delay: 0.0, options: .curveEaseIn, animations: {
+            sender.frame = CGRect(x: x, y: sender.frame.origin.y, width: 1, height: sender.frame.height)
+        }) { _ in
+            UIView.animate(withDuration: 0.25, delay: 0.0, options: .curveEaseOut, animations: {
+                sender.setBackgroundImage(#imageLiteral(resourceName: "pattern2"), for: .normal)
+                sender.frame = CGRect(x: sender.frame.origin.x - width, y: sender.frame.origin.y, width: width * 2, height: sender.frame.height)
+            }, completion: nil)
+        }
     }
     
     var nextView = UIViewController()
@@ -205,7 +265,10 @@ class ScrollButton: UIViewController {
                 sendTitle = inputData[searchNum].title!
                 sendIconName = inputData[searchNum].iconName!
                 sendData = inputData[searchNum].strArr
-                subject = inputData[searchNum].subject!
+                if let optSubject = inputData[searchNum].subject {
+                    subject = optSubject
+                }
+               
                 
                 saveData = inputData[searchNum]
                 

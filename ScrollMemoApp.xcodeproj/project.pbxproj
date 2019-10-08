@@ -20,6 +20,7 @@
 		E75631A92305995B00E2A065 /* ScrollButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75631A62305995B00E2A065 /* ScrollButton.swift */; };
 		E75631AB2305A92800E2A065 /* IconEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75631AA2305A92800E2A065 /* IconEditView.swift */; };
 		E7841718233140BB004F2F11 /* ColorCodeCast.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7841717233140BB004F2F11 /* ColorCodeCast.swift */; };
+		E79B1F782348740400DA77EE /* SendPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79B1F772348740400DA77EE /* SendPreview.swift */; };
 		E79D1866230EFBCC009BFE61 /* ICONList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79D1865230EFBCC009BFE61 /* ICONList.swift */; };
 		E7F11184231C1B7D002A17D1 /* GeneralView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F11183231C1B7D002A17D1 /* GeneralView.swift */; };
 		E7F111A823296D95002A17D1 /* ColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F111A723296D95002A17D1 /* ColorPicker.swift */; };
@@ -62,6 +63,7 @@
 		E75631A62305995B00E2A065 /* ScrollButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollButton.swift; sourceTree = "<group>"; };
 		E75631AA2305A92800E2A065 /* IconEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconEditView.swift; sourceTree = "<group>"; };
 		E7841717233140BB004F2F11 /* ColorCodeCast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCodeCast.swift; sourceTree = "<group>"; };
+		E79B1F772348740400DA77EE /* SendPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendPreview.swift; sourceTree = "<group>"; };
 		E79D1865230EFBCC009BFE61 /* ICONList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICONList.swift; sourceTree = "<group>"; };
 		E7F11183231C1B7D002A17D1 /* GeneralView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralView.swift; sourceTree = "<group>"; };
 		E7F111A723296D95002A17D1 /* ColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPicker.swift; sourceTree = "<group>"; };
@@ -122,9 +124,10 @@
 				E7841714232EA199004F2F11 /* ジャンル選択画面 */,
 				E7841716232EA210004F2F11 /* アイコン編集画面 */,
 				E75631772305985300E2A065 /* Main.storyboard */,
-				E708ECA023380FBC000ED531 /* ListView.swift */,
+				E79B1F76234873E100DA77EE /* リスト画面 */,
 				E756317D2305985400E2A065 /* Assets.xcassets */,
 				E756317F2305985400E2A065 /* LaunchScreen.storyboard */,
+				E79B1F772348740400DA77EE /* SendPreview.swift */,
 				E75631822305985400E2A065 /* Info.plist */,
 				E756317A2305985300E2A065 /* ScrollMemoApp.xcdatamodeld */,
 			);
@@ -183,6 +186,14 @@
 				E75631AA2305A92800E2A065 /* IconEditView.swift */,
 			);
 			path = "アイコン編集画面";
+			sourceTree = "<group>";
+		};
+		E79B1F76234873E100DA77EE /* リスト画面 */ = {
+			isa = PBXGroup;
+			children = (
+				E708ECA023380FBC000ED531 /* ListView.swift */,
+			);
+			path = "リスト画面";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -316,6 +327,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E79B1F782348740400DA77EE /* SendPreview.swift in Sources */,
 				E75631AB2305A92800E2A065 /* IconEditView.swift in Sources */,
 				E75631A82305995B00E2A065 /* EditView.swift in Sources */,
 				E75631A92305995B00E2A065 /* ScrollButton.swift in Sources */,

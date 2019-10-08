@@ -162,11 +162,13 @@ class ListView: UIViewController, UITabBarDelegate, UITextViewDelegate, UITableV
     
     func SetButton() {
         
+        /*
         //アイコン選択画面への遷移ボタン
         iconEditButton.frame = CGRect(x: view.frame.width - 75, y: view.frame.height - 75, width: 50, height: 50)
         iconEditButton.setImage(UIImage(named: buttonIconName), for: .normal)
         iconEditButton.addTarget(self, action: #selector(ViewMove), for: .touchUpInside)
         view.addSubview(iconEditButton)
+ */
         
         let addButton = UIButton(frame: CGRect(x: view.center.x - 25, y: view.frame.height - 75, width: 50, height: 50))
         addButton.setImage(#imageLiteral(resourceName: "new"), for: .normal)
