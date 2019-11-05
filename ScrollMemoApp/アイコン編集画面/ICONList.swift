@@ -13,6 +13,10 @@ class IconList: UIViewController {
     var iconString: [String] = ["adidas","android","bigben","captain","dragon","ferrari","flower","ios","king",
                                 "magic","mazda","monster48","nasa","pharao","pika","pirates","premier",
                                 "psyduck","real","mercedes","sagrada","samurai"]
+    var blueIcon: [String] = ["bonds","card","cent","char","comments","conflict","fund","futures","increase","inspection","invest","news",
+                              "pipe","planner","ratings","study","support","tasks","golf","table","bask","soccer","horse","run",
+                              "airport","rocket","taxi","kart","ship","fighter","bolt","rainbow","rainy","tornado","volcano",
+                              "sun","rain","snow","moon","cloud","cloudth","night"]
     
     
     /*
@@ -33,19 +37,19 @@ class IconList: UIViewController {
     var viewKey = ""
     
     func IconSelect() {
-        let iconLength = view.frame.width / 7
+        let iconLength = view.frame.width / 6
         let head = view.frame.height / 10
         
-        for i in 0 ..< iconString.count {
+        for i in 0 ..< blueIcon.count {
             let icon = UIButton()
-            let x = CGFloat(i % 7) * iconLength
-            let y = CGFloat(i / 7) * iconLength + head
+            let x = CGFloat(i % 6) * iconLength
+            let y = CGFloat(i / 6) * iconLength + head
             
             icon.tag = i
             icon.frame = CGRect(x: x, y: y, width: iconLength, height: iconLength)
             //icon.backgroundColor = .blue
             //icon.layer.cornerRadius = iconLength / 2
-            icon.setImage(UIImage(named: iconString[i]), for: .normal)
+            icon.setImage(UIImage(named: blueIcon[i]), for: .normal)
             
             icon.addTarget(self, action: #selector(saveIcon), for: .touchUpInside)
             
@@ -72,7 +76,7 @@ class IconList: UIViewController {
         switch viewKey {
         case "Text":
             let returnView = self.navigationController?.viewControllers[viewCnt] as! EditView
-            returnView.buttonIconName = iconString[sender.tag]
+            returnView.buttonIconName = blueIcon[sender.tag]
 
         default:
             print("error")

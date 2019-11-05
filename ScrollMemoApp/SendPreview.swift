@@ -108,6 +108,7 @@ class SendView: UIViewController {
         let posX = view.frame.width / 9
         let posY = view.frame.height / 10 * 7
         let line = UIButton(frame: CGRect(x: posX * 2, y: posY, width: posX, height: posX))
+        line.addTarget(self, action: #selector(lineSend), for: .touchUpInside)
         line.setImage(#imageLiteral(resourceName: "line"), for: .normal)
         
         let twitter = UIButton(frame: CGRect(x: posX * 4, y: posY, width: posX, height: posX))
@@ -126,6 +127,39 @@ class SendView: UIViewController {
         returnView?.viewWillAppear(true)
         
         dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func lineSend() {
+        let urlscheme: String = "line://msg/text"
+        let message = "iPhone X\n\n私たちはずっと変わらないビジョンを持ち続けてきました。\nすべてがスクリーンのiPhoneを作ること。\n\nhttps://www.apple.com/jp/iphone-x/"
+        
+        // line:/msg/text/(メッセージ)
+        let urlstring = urlscheme + "/" + message
+        
+        // URLエンコード
+        guard let  encodedURL = urlstring.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed) else {
+            return
+        }
+        
+        // URL作成
+        guard let url = URL(string: encodedURL) else {
+            return
+        }
+        
+        if UIApplication.shared.canOpenURL(url) {
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(url, options: [:], completionHandler: { (succes) in
+                    //  LINEアプリ表示成功
+                })
+            }else{
+                UIApplication.shared.openURL(url)
+            }
+        }else {
+            // LINEアプリが無い場合
+            let alertController = UIAlertController(title: "エラー",message: "LINEがインストールされていません",preferredStyle: UIAlertController.Style.alert)
+            alertController.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default))
+            present(alertController,animated: true,completion: nil)
+        }
     }
     
     

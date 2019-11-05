@@ -72,7 +72,7 @@ class ScrollButton: UIViewController {
         
         //view.isOpaque = true
         
-        view.backgroundColor = .black
+        view.backgroundColor = UIColor(colorCode: "0023A8")
         
         removeAllSubviews(parentView: scrollView)
         
@@ -80,10 +80,9 @@ class ScrollButton: UIViewController {
         
         scrollView.frame = CGRect(x: 0.0, y: view.frame.width / 10 * 2.5, width: view.frame.width, height: view.frame.height)
         scrollView.contentSize = CGSize(width:view.frame.width, height:view.frame.height)
-        scrollView.backgroundColor = .black
+        scrollView.backgroundColor = UIColor(colorCode: "0023A8")
         
         deleteButton.frame = CGRect(x: view.frame.width - 50, y: 50, width: 50, height: 50)
-        //deleteButton.backgroundColor = .white
         deleteButton.setTitle("🙅‍♂️", for: .normal)
         deleteButton.addTarget(self, action: #selector(DataDelete), for: .touchUpInside)
         
@@ -107,6 +106,7 @@ class ScrollButton: UIViewController {
         }catch {
             print("error")
         }
+        
         viewWillAppear(true)
     }
     
@@ -117,7 +117,8 @@ class ScrollButton: UIViewController {
             subview.removeFromSuperview()
         }
     }
-
+    
+    //行を増加する
     @objc func AddRow() {
         row += 1
         SetButton(row: row)
@@ -163,11 +164,11 @@ class ScrollButton: UIViewController {
                 tag += 1
                 
                 if button.backgroundColor == nil {
-                    button.backgroundColor = .black
-                    button.setBackgroundImage(UIImage(named: "62085-OB2I1K-498"), for: .normal)
+                    button.backgroundColor = .clear
+                    //button.setBackgroundImage(UIImage(named: "62085-OB2I1K-498"), for: .normal)
                     button.layer.borderColor = UIColor.white.cgColor
                     button.layer.masksToBounds = true
-                    button.layer.borderWidth = 5.0
+                    button.layer.borderWidth = 1.5
                 }
                 /*
                 let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.onLongPressed(_:)))

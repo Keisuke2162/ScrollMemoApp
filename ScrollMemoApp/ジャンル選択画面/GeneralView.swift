@@ -22,6 +22,7 @@ class GeneralView: UIViewController {
     
     let iconName = ["text","list","chart","map","night","noneicon","noneicon","noneicon","noneicon"]
     let subject = ["memo","list","graph","map","diary","photo","A","B","C"]
+    let buttonColor = ["00A2E9","89C3EB","1D50A2","004F7A","829AC8","1760A0","00B8EE","5C6EB1","384D9F","AFC0E2","005481","89A3D3"]
     
     //キーボードにつけるツールバー（doneボタン用）
     let keyboardBar = UIToolbar()
@@ -71,14 +72,16 @@ class GeneralView: UIViewController {
     }
     
     var titleField = UITextField()
+    var headder = UIView()
 
     func HeadderView() {
-        let headder = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height / 10 * 3))
+        headder.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height / 10 * 3)
         view.addSubview(headder)
         
+        /* カラーピッカー
         let colorPickerView = ColorPickerView(frame: CGRect(x: 0, y: view.frame.height / 10 * 9, width: view.frame.width, height: view.frame.height / 10))
         view.addSubview(colorPickerView)
-        
+        */
         
         titleField.frame = CGRect(x: view.frame.width / 4, y: headder.frame.height / 5 * 3.5, width: view.frame.width / 2, height: headder.frame.height / 5)
         titleField.text = "test"
@@ -90,7 +93,8 @@ class GeneralView: UIViewController {
         titleField.inputAccessoryView = keyboardBar
         
         headder.addSubview(titleField)
-
+        
+        /*カラーピッカーに合わせて動的にヘッダーの色を変更
         colorPickerView.onColorDidChange = { color in
             DispatchQueue.main.async {
                 
@@ -100,12 +104,34 @@ class GeneralView: UIViewController {
                 
             }
             
+        }*/
+        
+        
+        
+        let x = view.frame.width / 6
+        let y = view.frame.height / 10
+        
+        for i in 0 ..< 12 {
+            let xNum = CGFloat(i % 6)
+            let yNum = CGFloat(i / 6 + 8)
+            
+            let colorButton = UIButton(frame: CGRect(x: (xNum + 0.1) * x, y: yNum * y, width: x * 0.8, height: x * 0.8))
+            colorButton.layer.cornerRadius = x / 2 * 0.8
+            colorButton.backgroundColor = UIColor(colorCode: buttonColor[i])
+            colorButton.addTarget(self, action: #selector(changeHeadder), for: .touchUpInside)
+            colorButton.tag = i
+            view.addSubview(colorButton)
         }
+    }
+    
+    @objc func changeHeadder(_ sender: UIButton) {
+        headderColor = UIColor(colorCode: buttonColor[sender.tag])
+        headder.backgroundColor = headderColor
     }
     
     func SetView() {
         
-        let width = view.frame.width / 10
+        let width = view.frame.width / 9
         let height = view.frame.height / 10
         
         scrollView.frame = CGRect(x: 0, y: height * 3.5, width: view.frame.width, height: height * 5)
@@ -116,19 +142,22 @@ class GeneralView: UIViewController {
         view.addSubview(scrollView)
 
         //ページ１
-        let view1 = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: height * 5))
+        let view1 = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: height * 4))
         view1.backgroundColor = .white
         scrollView.addSubview(view1)
         //選択種目ボタン
-        for i in 0 ..< 9 {
+        for i in 0 ..< 4 {
             let generalButton = UIButton()
-            let x = CGFloat(i % 3 * 3 + 1)
-            let y = CGFloat(i / 3)
+            let x = CGFloat(i % 2)
+            let y = CGFloat(i / 2)
             
             generalButton.tag = i
-            generalButton.frame = CGRect(x: width * x, y: view1.frame.height / 3 * y, width: width * 2, height: width * 2)
+            generalButton.frame = CGRect(x: width * 5 * x, y: view1.frame.height / 2 * y, width: width * 4, height: width * 4)
             generalButton.setImage(UIImage(named: iconName[i]), for: .normal)
             generalButton.addTarget(self, action: #selector(ChooseButton), for: .touchUpInside)
+            
+            //generalButton.layer.borderColor = UIColor.black.cgColor
+            //generalButton.layer.borderWidth = 2.0
             
             view1.addSubview(generalButton)
         }
@@ -172,6 +201,7 @@ class GeneralView: UIViewController {
     func MoveNextView(subject: String) {
         let titleTxt = String(titleField.text!)
         var nextView = UIViewController()
+        
        
         switch subject {
         case "memo":
@@ -184,16 +214,6 @@ class GeneralView: UIViewController {
             print("Go to graph")
         case "map":
             print("Go to map")
-        case "diary":
-            print("Go to diary")
-        case "photo":
-            print("Go to photo")
-        case "A":
-            print("Go to A")
-        case "B":
-            print("Go to B")
-        case "C":
-            print("Go to C")
         default:
             print("Other")
         }
