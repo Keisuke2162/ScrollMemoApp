@@ -20,9 +20,11 @@ class GeneralView: UIViewController {
     var headderColor: UIColor = .clear
     
     
-    let iconName = ["text","list","chart","map","night","noneicon","noneicon","noneicon","noneicon"]
+    let iconName = ["text","list","todo","image"]
     let subject = ["memo","list","graph","map","diary","photo","A","B","C"]
     let buttonColor = ["00A2E9","89C3EB","1D50A2","004F7A","829AC8","1760A0","00B8EE","5C6EB1","384D9F","AFC0E2","005481","89A3D3"]
+    let kidsColor = ["de6c31","fed500","00a0e8","153692","008542","ea6088","efa72b","aecfed","efcfe2"]
+    let rainbow = ["e50011","ee7700","fff000","00a73b","0064b3","5f1885","2a2489","fefefe","000000"]
     
     //キーボードにつけるツールバー（doneボタン用）
     let keyboardBar = UIToolbar()
@@ -105,19 +107,16 @@ class GeneralView: UIViewController {
             }
             
         }*/
-        
-        
-        
         let x = view.frame.width / 6
         let y = view.frame.height / 10
         
-        for i in 0 ..< 12 {
-            let xNum = CGFloat(i % 6)
-            let yNum = CGFloat(i / 6 + 8)
+        for i in 0 ..< 8 {
+            let xNum = CGFloat(i % 4)
+            let yNum = CGFloat(i / 4 + 8)
             
             let colorButton = UIButton(frame: CGRect(x: (xNum + 0.1) * x, y: yNum * y, width: x * 0.8, height: x * 0.8))
             colorButton.layer.cornerRadius = x / 2 * 0.8
-            colorButton.backgroundColor = UIColor(colorCode: buttonColor[i])
+            colorButton.backgroundColor = UIColor(colorCode: rainbow[i])
             colorButton.addTarget(self, action: #selector(changeHeadder), for: .touchUpInside)
             colorButton.tag = i
             view.addSubview(colorButton)
@@ -125,7 +124,7 @@ class GeneralView: UIViewController {
     }
     
     @objc func changeHeadder(_ sender: UIButton) {
-        headderColor = UIColor(colorCode: buttonColor[sender.tag])
+        headderColor = UIColor(colorCode: rainbow[sender.tag])
         headder.backgroundColor = headderColor
     }
     

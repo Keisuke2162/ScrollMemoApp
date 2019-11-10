@@ -72,7 +72,7 @@ class ScrollButton: UIViewController {
         
         //view.isOpaque = true
         
-        view.backgroundColor = UIColor(colorCode: "0023A8")
+        view.backgroundColor = UIColor(colorCode: "000000")
         
         removeAllSubviews(parentView: scrollView)
         
@@ -80,7 +80,8 @@ class ScrollButton: UIViewController {
         
         scrollView.frame = CGRect(x: 0.0, y: view.frame.width / 10 * 2.5, width: view.frame.width, height: view.frame.height)
         scrollView.contentSize = CGSize(width:view.frame.width, height:view.frame.height)
-        scrollView.backgroundColor = UIColor(colorCode: "0023A8")
+        //scrollView.backgroundColor = UIColor(colorCode: "0023A8")
+        scrollView.backgroundColor = .clear
         
         deleteButton.frame = CGRect(x: view.frame.width - 50, y: 50, width: 50, height: 50)
         deleteButton.setTitle("🙅‍♂️", for: .normal)
