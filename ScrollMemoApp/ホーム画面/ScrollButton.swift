@@ -72,7 +72,7 @@ class ScrollButton: UIViewController {
         
         //view.isOpaque = true
         
-        view.backgroundColor = UIColor(colorCode: "000000")
+        view.backgroundColor = UIColor(colorCode: "3389ca")
         
         removeAllSubviews(parentView: scrollView)
         
@@ -128,16 +128,32 @@ class ScrollButton: UIViewController {
     func SetButton(row: Int) {
         var tag: Int = 0
         for i in 0 ..< row {
-            for j in 0 ..< 4 {
+            for j in 0 ..< 3 {
                 let button = UIButton()
                 
-                button.frame = CGRect(x: scrollView.frame.width / 4 * CGFloat(j), y: view.frame.height / 5.5 * CGFloat(i), width: scrollView.frame.width / 4, height: view.frame.height / 5.5)
-                
+                /**********カード型ホーム*******j の最大値を4に設定する事****/
+                /*
                 button.frame.origin.x = scrollView.frame.width / 4 * CGFloat(j) + 5
-                button.frame.origin.y = view.frame.height / 5.5 * CGFloat(i) + 5
+                button.frame.origin.y = scrollView.frame.height / 5.5 * CGFloat(i) + 5
                 button.frame.size = CGSize(width: scrollView.frame.width / 4 - 10, height: view.frame.height / 5.5 - 10)
                 button.layer.cornerRadius = 10.0
                 button.tag = tag
+                */
+                
+                
+                /*********サークル型ホーム**********jの最大値を3に設定する事**/
+                
+                
+                let blank = (scrollView.frame.width - (scrollView.frame.width / 3.5 * 3)) / 4
+                
+                button.frame.origin.x = scrollView.frame.width / 3 * CGFloat(j) + blank
+                button.frame.origin.y = scrollView.frame.width / 3 * CGFloat(i)
+                button.frame.size = CGSize(width: scrollView.frame.width / 3.5 - 10, height: scrollView.frame.width / 3.5 - 10)
+                button.layer.cornerRadius = (scrollView.frame.width / 3.5 - 10) / 2
+                button.tag = tag
+                
+                
+                /*******************************************************/
                 
                 button.imageEdgeInsets = UIEdgeInsets(top: -30.0, left: 0, bottom: 0, right: 0)
                 
@@ -155,6 +171,7 @@ class ScrollButton: UIViewController {
                         label.text = inputData[searchNum].title
                         label.textAlignment = NSTextAlignment.center
                         label.font = UIFont(name: "Avenir-Oblique", size: 20)
+                        label.adjustsFontSizeToFitWidth = true
                         button.addSubview(label)
                         
                         

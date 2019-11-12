@@ -116,7 +116,7 @@ class GeneralView: UIViewController {
             
             let colorButton = UIButton(frame: CGRect(x: (xNum + 0.1) * x, y: yNum * y, width: x * 0.8, height: x * 0.8))
             colorButton.layer.cornerRadius = x / 2 * 0.8
-            colorButton.backgroundColor = UIColor(colorCode: rainbow[i])
+            colorButton.backgroundColor = UIColor(colorCode: buttonColor[i])
             colorButton.addTarget(self, action: #selector(changeHeadder), for: .touchUpInside)
             colorButton.tag = i
             view.addSubview(colorButton)
@@ -124,7 +124,7 @@ class GeneralView: UIViewController {
     }
     
     @objc func changeHeadder(_ sender: UIButton) {
-        headderColor = UIColor(colorCode: rainbow[sender.tag])
+        headderColor = UIColor(colorCode: buttonColor[sender.tag])
         headder.backgroundColor = headderColor
     }
     
