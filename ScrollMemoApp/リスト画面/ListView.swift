@@ -162,13 +162,14 @@ class ListView: UIViewController, UITabBarDelegate, UITextViewDelegate, UITableV
     
     func SetButton() {
         
-        /*
+        
         //アイコン選択画面への遷移ボタン
-        iconEditButton.frame = CGRect(x: view.frame.width - 75, y: view.frame.height - 75, width: 50, height: 50)
+       /* iconEditButton.frame = CGRect(x: view.frame.width - 75, y: view.frame.height - 75, width: 50, height: 50)
         iconEditButton.setImage(UIImage(named: buttonIconName), for: .normal)
         iconEditButton.addTarget(self, action: #selector(ViewMove), for: .touchUpInside)
         view.addSubview(iconEditButton)
  */
+ 
         
         let addButton = UIButton(frame: CGRect(x: view.center.x - 25, y: view.frame.height - 75, width: 50, height: 50))
         addButton.setImage(#imageLiteral(resourceName: "new"), for: .normal)
@@ -179,7 +180,9 @@ class ListView: UIViewController, UITabBarDelegate, UITextViewDelegate, UITableV
     //アイコン選択画面へ遷移
     @objc func ViewMove() {
         let nextView = IconList()
-        present(nextView, animated: true, completion: nil)
+        nextView.viewKey = "List"
+        self.navigationController?.pushViewController(nextView, animated: true)
+        //present(nextView, animated: true, completion: nil)
     }
     
     @objc func AddTask() {
@@ -238,6 +241,14 @@ class ListView: UIViewController, UITabBarDelegate, UITextViewDelegate, UITableV
         returnIcon.setTitleColor(.white, for: .normal)
         returnIcon.addTarget(self, action: #selector(returnSpring), for: .touchUpInside)
         
+        //アイコン選択画面への遷移ボタン
+        iconEditButton.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        iconEditButton.center = CGPoint(x: headder.center.x, y: headder.center.y)
+        iconEditButton.setImage(UIImage(named: buttonIconName), for: .normal)
+        iconEditButton.addTarget(self, action: #selector(ViewMove), for: .touchUpInside)
+        //view.addSubview(iconEditButton)
+        
+        headder.addSubview(iconEditButton)
         headder.addSubview(returnIcon)
     }
     

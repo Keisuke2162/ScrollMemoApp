@@ -72,7 +72,8 @@ class ScrollButton: UIViewController {
         
         //view.isOpaque = true
         
-        view.backgroundColor = UIColor(colorCode: "3389ca")
+        //view.backgroundColor = UIColor(colorCode: "682dd9")
+        view.backgroundColor = UIColor(colorCode: "ffffff")
         
         removeAllSubviews(parentView: scrollView)
         
@@ -155,7 +156,7 @@ class ScrollButton: UIViewController {
                 
                 /*******************************************************/
                 
-                button.imageEdgeInsets = UIEdgeInsets(top: -30.0, left: 0, bottom: 0, right: 0)
+                //button.imageEdgeInsets = UIEdgeInsets(top: -30.0, left: 0, bottom: 0, right: 0)
                 
                 for searchNum in 0 ..< inputData.count {
                     if tag == inputData[searchNum].tag {
@@ -166,13 +167,19 @@ class ScrollButton: UIViewController {
 
                         
                         button.setImage(UIImage(named: inputData[searchNum].iconName!), for: .normal)
+                        button.imageView?.contentMode = .scaleAspectFit
+                        //button.contentHorizontalAlignment = .fill
+                        //button.contentVerticalAlignment = .fill
                         
-                        let label = UILabel(frame: CGRect(x: 0, y: button.frame.height / 4 * 2.5, width: button.frame.width, height:  button.frame.height / 4))
+                        //let label = UILabel(frame: CGRect(x: 0, y: button.frame.height / 4 * 2.5, width: button.frame.width, height:  button.frame.height / 4))
+                        let label = UILabel(frame: CGRect(x: button.frame.origin.x, y: button.frame.origin.y + button.frame.height, width: button.frame.width, height:  button.frame.height / 4))
                         label.text = inputData[searchNum].title
                         label.textAlignment = NSTextAlignment.center
-                        label.font = UIFont(name: "Avenir-Oblique", size: 20)
+                        label.font = UIFont(name: "Avenir-Oblique", size: 15)
                         label.adjustsFontSizeToFitWidth = true
-                        button.addSubview(label)
+                        label.textColor = .black
+                        scrollView.addSubview(label)
+                        //button.addSubview(label)
                         
                         
                         break
@@ -303,7 +310,10 @@ class ScrollButton: UIViewController {
                 nextView = EditView(sendTag: sender.tag, sendColor: color, sendTitle: sendTitle, sendText: sendText, sendIconName: sendIconName,  receiveArray: inputData, viewKey: "Home", sendSubject: subject)
             case "List":
                 nextView = ListView(sendTag: sender.tag, sendColor: color, sendTitle: sendTitle, sendArr: sendData, sendIconName: sendIconName, receiveArray: inputData, viewKey: "Home", sendSubject: subject)
-                
+                print("List")
+            case "Dictionary":
+                nextView = DictionaryView(sendTag: sender.tag, sendColor: color, sendTitle: sendTitle, sendArr: sendData, sendIconName: sendIconName, receiveArray: inputData, viewKey: "Home", sendSubject: subject)
+                print("Dictionary")
             default:
                 nextView = EditView(sendTag: sender.tag, sendColor: color, sendTitle: sendTitle, sendText: sendText, sendIconName: sendIconName,  receiveArray: inputData, viewKey: "Home", sendSubject: subject)
             }

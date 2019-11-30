@@ -22,6 +22,8 @@
 		E7841718233140BB004F2F11 /* ColorCodeCast.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7841717233140BB004F2F11 /* ColorCodeCast.swift */; };
 		E79B1F782348740400DA77EE /* SendPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79B1F772348740400DA77EE /* SendPreview.swift */; };
 		E79D1866230EFBCC009BFE61 /* ICONList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79D1865230EFBCC009BFE61 /* ICONList.swift */; };
+		E7AE683C2385BA8D00676D33 /* DictionaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AE683B2385BA8D00676D33 /* DictionaryView.swift */; };
+		E7AE683E2386E45500676D33 /* DictionaryText.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AE683D2386E45500676D33 /* DictionaryText.swift */; };
 		E7F11184231C1B7D002A17D1 /* GeneralView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F11183231C1B7D002A17D1 /* GeneralView.swift */; };
 		E7F111A823296D95002A17D1 /* ColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F111A723296D95002A17D1 /* ColorPicker.swift */; };
 /* End PBXBuildFile section */
@@ -65,6 +67,8 @@
 		E7841717233140BB004F2F11 /* ColorCodeCast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCodeCast.swift; sourceTree = "<group>"; };
 		E79B1F772348740400DA77EE /* SendPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendPreview.swift; sourceTree = "<group>"; };
 		E79D1865230EFBCC009BFE61 /* ICONList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICONList.swift; sourceTree = "<group>"; };
+		E7AE683B2385BA8D00676D33 /* DictionaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryView.swift; sourceTree = "<group>"; };
+		E7AE683D2386E45500676D33 /* DictionaryText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryText.swift; sourceTree = "<group>"; };
 		E7F11183231C1B7D002A17D1 /* GeneralView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralView.swift; sourceTree = "<group>"; };
 		E7F111A723296D95002A17D1 /* ColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -117,16 +121,17 @@
 		E75631722305985300E2A065 /* ScrollMemoApp */ = {
 			isa = PBXGroup;
 			children = (
+				E75631772305985300E2A065 /* Main.storyboard */,
 				E75631732305985300E2A065 /* AppDelegate.swift */,
 				E75631A42305995B00E2A065 /* DataView.swift */,
 				E7841713232EA182004F2F11 /* ホーム画面 */,
 				E7841715232EA1FA004F2F11 /* メモ帳画面 */,
 				E7841714232EA199004F2F11 /* ジャンル選択画面 */,
 				E7841716232EA210004F2F11 /* アイコン編集画面 */,
-				E75631772305985300E2A065 /* Main.storyboard */,
 				E79B1F76234873E100DA77EE /* リスト画面 */,
-				E756317D2305985400E2A065 /* Assets.xcassets */,
+				E7AE683F2386E91E00676D33 /* 辞書型画面 */,
 				E756317F2305985400E2A065 /* LaunchScreen.storyboard */,
+				E756317D2305985400E2A065 /* Assets.xcassets */,
 				E79B1F772348740400DA77EE /* SendPreview.swift */,
 				E75631822305985400E2A065 /* Info.plist */,
 				E756317A2305985300E2A065 /* ScrollMemoApp.xcdatamodeld */,
@@ -194,6 +199,15 @@
 				E708ECA023380FBC000ED531 /* ListView.swift */,
 			);
 			path = "リスト画面";
+			sourceTree = "<group>";
+		};
+		E7AE683F2386E91E00676D33 /* 辞書型画面 */ = {
+			isa = PBXGroup;
+			children = (
+				E7AE683B2385BA8D00676D33 /* DictionaryView.swift */,
+				E7AE683D2386E45500676D33 /* DictionaryText.swift */,
+			);
+			path = "辞書型画面";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -332,10 +346,12 @@
 				E75631A82305995B00E2A065 /* EditView.swift in Sources */,
 				E75631A92305995B00E2A065 /* ScrollButton.swift in Sources */,
 				E756317C2305985300E2A065 /* ScrollMemoApp.xcdatamodeld in Sources */,
+				E7AE683C2385BA8D00676D33 /* DictionaryView.swift in Sources */,
 				E75631A72305995B00E2A065 /* DataView.swift in Sources */,
 				E7F11184231C1B7D002A17D1 /* GeneralView.swift in Sources */,
 				E7F111A823296D95002A17D1 /* ColorPicker.swift in Sources */,
 				E79D1866230EFBCC009BFE61 /* ICONList.swift in Sources */,
+				E7AE683E2386E45500676D33 /* DictionaryText.swift in Sources */,
 				E708ECA123380FBC000ED531 /* ListView.swift in Sources */,
 				E75631742305985300E2A065 /* AppDelegate.swift in Sources */,
 				E7841718233140BB004F2F11 /* ColorCodeCast.swift in Sources */,

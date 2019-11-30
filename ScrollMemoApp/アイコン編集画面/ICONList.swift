@@ -77,12 +77,21 @@ class IconList: UIViewController {
         case "Text":
             let returnView = self.navigationController?.viewControllers[viewCnt] as! EditView
             returnView.buttonIconName = blueIcon[sender.tag]
+        case "List":
+            let returnView = self.navigationController?.viewControllers[viewCnt] as! ListView
+            returnView.buttonIconName = blueIcon[sender.tag]
+        case "Dictionary":
+            let returnView = self.navigationController?.viewControllers[viewCnt] as! DictionaryView
+            returnView.buttonIconName = blueIcon[sender.tag]
+        case "General":
+            let returnView = self.navigationController?.viewControllers[viewCnt] as! GeneralView
+            returnView.buttonIconName = blueIcon[sender.tag]
 
         default:
             print("error")
         }
         
-        navigationController?.popToViewController(navigationController!.viewControllers[viewCnt], animated: false)
+        navigationController?.popToViewController(navigationController!.viewControllers[viewCnt], animated: true)
     }
     
     

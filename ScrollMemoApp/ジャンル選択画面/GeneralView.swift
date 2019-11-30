@@ -19,10 +19,13 @@ class GeneralView: UIViewController {
     var pageControl: UIPageControl!
     var headderColor: UIColor = .clear
     
+    let iconButton = UIButton()
+    var buttonIconName: String = ""
+    
     
     let iconName = ["text","list","todo","image"]
-    let subject = ["memo","list","graph","map","diary","photo","A","B","C"]
-    let buttonColor = ["00A2E9","89C3EB","1D50A2","004F7A","829AC8","1760A0","00B8EE","5C6EB1","384D9F","AFC0E2","005481","89A3D3"]
+    let subject = ["memo","list","dictionary","map","diary","photo","A","B","C"]
+    let buttonColor = ["00A2E9","ffffff","1D50A2","004F7A","829AC8","1760A0","00B8EE","5C6EB1","384D9F","AFC0E2","005481","89A3D3"]//"89C3EB"
     let kidsColor = ["de6c31","fed500","00a0e8","153692","008542","ea6088","efa72b","aecfed","efcfe2"]
     let rainbow = ["e50011","ee7700","fff000","00a73b","0064b3","5f1885","2a2489","fefefe","000000"]
     
@@ -49,6 +52,8 @@ class GeneralView: UIViewController {
             returnViewTag = false
             dismiss(animated: false, completion: nil)
         }
+        
+        iconButton.setImage(UIImage(named: buttonIconName), for: .normal)
     }
     
     
@@ -66,6 +71,7 @@ class GeneralView: UIViewController {
         
         view.backgroundColor = .white
         SetView()
+        SetGeneralButton()
         HeadderView()
     }
     
@@ -107,25 +113,14 @@ class GeneralView: UIViewController {
             }
             
         }*/
-        let x = view.frame.width / 6
-        let y = view.frame.height / 10
-        
-        for i in 0 ..< 8 {
-            let xNum = CGFloat(i % 4)
-            let yNum = CGFloat(i / 4 + 8)
-            
-            let colorButton = UIButton(frame: CGRect(x: (xNum + 0.1) * x, y: yNum * y, width: x * 0.8, height: x * 0.8))
-            colorButton.layer.cornerRadius = x / 2 * 0.8
-            colorButton.backgroundColor = UIColor(colorCode: buttonColor[i])
-            colorButton.addTarget(self, action: #selector(changeHeadder), for: .touchUpInside)
-            colorButton.tag = i
-            view.addSubview(colorButton)
-        }
+
     }
     
-    @objc func changeHeadder(_ sender: UIButton) {
+    @objc func changeColor(_ sender: UIButton) {
         headderColor = UIColor(colorCode: buttonColor[sender.tag])
         headder.backgroundColor = headderColor
+        
+        iconButton.backgroundColor = headderColor
     }
     
     func SetView() {
@@ -161,37 +156,42 @@ class GeneralView: UIViewController {
             view1.addSubview(generalButton)
         }
         
-        /*
-        //ページ２
-        let view2 = UIView(frame: CGRect(x: view.frame.width, y: 0, width: view.frame.width, height: height * 5))
-        view2.backgroundColor = .blue
-        scrollView.addSubview(view2)
         
-        let nextButton = UIButton(frame: CGRect(x: 0, y: 0, width: 80, height: 80))
-        nextButton.setImage(#imageLiteral(resourceName: "exit"), for: .normal)
-        nextButton.addTarget(self, action: #selector(ChooseButton2), for: .touchUpInside)
-        view2.addSubview(nextButton)
+    }
+    
+    func SetGeneralButton() {
+        
+        //色選択ボタン
+        let x = view.frame.width / 6
+        let y = view.frame.height / 10
+        
+        for i in 0 ..< 8 {
+            let xNum = CGFloat(i % 4)
+            let yNum = CGFloat(i / 4 + 8)
+            
+            let colorButton = UIButton(frame: CGRect(x: (xNum + 0.1) * x, y: yNum * y, width: x * 0.8, height: x * 0.8))
+            colorButton.layer.cornerRadius = x / 2 * 0.8
+            colorButton.backgroundColor = UIColor(colorCode: buttonColor[i])
+            colorButton.addTarget(self, action: #selector(changeColor), for: .touchUpInside)
+            colorButton.tag = i
+            view.addSubview(colorButton)
+        }
+        
+        iconButton.frame = CGRect(x: x * 4, y: y * 8, width: x * 1.6, height: x * 1.6)
+        iconButton.center = CGPoint(x: x * 5, y: y * 9)
+        iconButton.backgroundColor = .clear
+        iconButton.layer.cornerRadius = x * 0.8
+        iconButton.setImage(UIImage(named: buttonIconName), for: .normal)
+        iconButton.addTarget(self, action: #selector(chooseIcon), for: .touchUpInside)
+        view.addSubview(iconButton)
         
         
-        //ページ３
-        let view3 = UIView(frame: CGRect(x: view.frame.width * 2, y: 0, width: view.frame.width, height: height * 5))
-        view3.backgroundColor = .yellow
-        scrollView.addSubview(view3)
-        
-        let resultButton = UIButton(frame: CGRect(x: 0, y: 0, width: 80, height: 80))
-        resultButton.setImage(#imageLiteral(resourceName: "exit"), for: .normal)
-        resultButton.addTarget(self, action: #selector(ResultView), for: .touchUpInside)
-        view3.addSubview(resultButton)
-
-        
-        // pageControlの表示位置とサイズ
-        pageControl = UIPageControl(frame: CGRect(x: 0, y: height * 8.5, width: view.frame.width , height: 30))
-        pageControl.numberOfPages = 3
-        pageControl.pageIndicatorTintColor = .lightGray
-        pageControl.currentPageIndicatorTintColor = .black
-        view.addSubview(pageControl)
- */
-
+    }
+    
+    @objc func chooseIcon() {
+        let nextView = IconList()
+        nextView.viewKey = "General"
+        self.navigationController?.pushViewController(nextView, animated: true)
     }
     
     var sendData: Data?
@@ -203,18 +203,18 @@ class GeneralView: UIViewController {
         
        
         switch subject {
-        case "memo":
-            print("Go to memo")
-            nextView = EditView(sendTag: sendTag, sendColor: headderColor, sendTitle: titleTxt, sendText: "", sendIconName: "", receiveArray: inputData, viewKey: "General", sendSubject: "Text")
-        case "list":
-            print("Go to list")
-            nextView = ListView(sendTag: sendTag, sendColor: headderColor, sendTitle: titleTxt, sendArr: sendData, sendIconName: "", receiveArray: inputData, viewKey: "General", sendSubject: "List")
-        case "graph":
-            print("Go to graph")
-        case "map":
-            print("Go to map")
-        default:
-            print("Other")
+            case "memo":
+                print("Go to memo")
+                nextView = EditView(sendTag: sendTag, sendColor: headderColor, sendTitle: titleTxt, sendText: "", sendIconName: buttonIconName, receiveArray: inputData, viewKey: "General", sendSubject: "Text")
+            case "list":
+                print("Go to list")
+                nextView = ListView(sendTag: sendTag, sendColor: headderColor, sendTitle: titleTxt, sendArr: sendData, sendIconName: buttonIconName, receiveArray: inputData, viewKey: "General", sendSubject: "List")
+            case "dictionary":
+                nextView = DictionaryView(sendTag: sendTag, sendColor: headderColor, sendTitle: titleTxt, sendArr: sendData, sendIconName: buttonIconName, receiveArray: inputData, viewKey: "General", sendSubject: "Dictionary")
+            case "map":
+                print("Go to map")
+            default:
+                print("Other")
         }
         self.navigationController?.pushViewController(nextView, animated: true)
     }
